@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../context/CartContext';
-import { usePaystackPayment } from 'react-paystack';
 import { Loader2, ShieldCheck, Check } from 'lucide-react';
 
 export default function CheckoutPage() {
@@ -16,15 +15,13 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Paystack configuration (using a test public key for demonstration)
-  const config = {
-    reference: (new Date()).getTime().toString(),
-    email: form.email || 'customer@example.com',
-    amount: subtotal * 100, // Paystack amount is in kobo (multiply by 100)
-    publicKey: 'pk_test_d397c886e0c608bfa0c6552e424075f922fb6e49', // Test key
-  };
-
-  const initializePayment = usePaystackPayment(config);
+  const NigerianStates = [
+    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
+    'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo',
+    'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nassarawa',
+    'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba',
+    'Yobe', 'Zamfara',
+  ];
 
   const handleChange = (field: string, value: string) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -43,22 +40,17 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const onSuccess = () => {
-    setIsProcessing(false);
-    clearCart();
-    router.push(`/success?exclusive=${hasExclusiveItem}`);
-  };
-
-  const onClose = () => {
-    setIsProcessing(false);
-    // User closed payment overlay
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       setIsProcessing(true);
-      initializePayment({ onSuccess, onClose });
+      
+      // Simulate payment processing
+      setTimeout(() => {
+        setIsProcessing(false);
+        clearCart();
+        router.push(`/success?exclusive=${hasExclusiveItem}`);
+      }, 2000);
     }
   };
 
@@ -132,7 +124,7 @@ export default function CheckoutPage() {
                     }}
                   >
                     <option value="">Select state</option>
-                    {nigerianStates.map(s => (
+                    {NigerianStates.map(s => (
                       <option key={s} value={s} className="bg-black text-white">{s}</option>
                     ))}
                   </select>
