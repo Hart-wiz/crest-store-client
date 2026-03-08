@@ -57,73 +57,54 @@ export default function VerifyPage() {
 
   if (!product) {
     return (
-      <div style={{ paddingTop: 140, textAlign: 'center', minHeight: '80vh' }}>
-        <p style={{ fontSize: '3rem', marginBottom: 16 }}>♛</p>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem' }}>Product Not Found</h1>
+      <div className="pt-[140px] text-center min-h-[80vh]">
+        <p className="text-5xl mb-4">♛</p>
+        <h1 className="font-heading text-2xl">Product Not Found</h1>
       </div>
     );
   }
 
   return (
-    <div style={{
-      minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '24px', background: 'var(--color-black)',
-    }}>
-      <div style={{ maxWidth: 500, width: '100%', textAlign: 'center' }}>
+    <div className="min-h-screen flex items-center justify-center p-6 bg-black">
+      <div className="max-w-[500px] w-full text-center">
         {!verified ? (
           <div className="animate-fade-in">
             {/* Spinner */}
-            <div style={{ position: 'relative', width: 100, height: 100, margin: '0 auto 40px' }}>
-              <div style={{
-                width: 100, height: 100, borderRadius: '50%',
-                border: '3px solid rgba(212,175,55,0.1)',
-                borderTopColor: 'var(--color-gold)',
-                animation: 'spin 1s linear infinite',
-              }} />
-              <div style={{
-                position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ fontSize: '1.5rem' }}>♛</span>
+            <div className="relative w-[100px] h-[100px] mx-auto mb-10">
+              <div className="w-[100px] h-[100px] rounded-full border-[3px] border-[rgba(212,175,55,0.1)] border-t-gold animate-spin" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-2xl">♛</span>
               </div>
             </div>
 
-            <h2 style={{
-              fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 12,
-            }}>
+            <h2 className="font-heading text-2xl font-bold mb-3">
               Exclusive <span className="gold-text">Verification</span>
             </h2>
-            <p style={{ color: 'var(--color-gray-400)', fontSize: '0.9rem', marginBottom: 40 }}>
+            <p className="text-gray-400 text-[0.9rem] mb-10">
               {product.name}
             </p>
 
             {/* Messages */}
-            <div style={{ marginBottom: 40 }}>
+            <div className="mb-10">
               {verificationMessages.map((msg, i) => (
                 <div
                   key={i}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 12,
-                    padding: '12px 16px', marginBottom: 8,
-                    background: i <= currentStep ? 'rgba(255,255,255,0.03)' : 'transparent',
-                    borderRadius: 8,
-                    opacity: i <= currentStep ? 1 : 0.2,
-                    transition: 'all 0.4s ease',
-                  }}
+                  className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-all duration-400 ${
+                    i <= currentStep ? 'bg-white/5 opacity-100' : 'bg-transparent opacity-20'
+                  }`}
                 >
-                  <span style={{
-                    width: 20, height: 20, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.6rem', flexShrink: 0,
-                    background: i < currentStep ? 'var(--color-gold)' : 'transparent',
-                    border: i < currentStep ? 'none' : i === currentStep ? '2px solid var(--color-gold)' : '1px solid var(--color-gray-700)',
-                    color: i < currentStep ? 'var(--color-black)' : 'var(--color-gray-500)',
-                    animation: i === currentStep ? 'pulse-gold 1.5s infinite' : 'none',
-                  }}>
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[0.6rem] shrink-0 ${
+                    i < currentStep
+                      ? 'bg-gold text-black border-none'
+                      : i === currentStep
+                        ? 'bg-transparent border-2 border-gold text-gray-500 animate-pulse-gold'
+                        : 'bg-transparent border border-gray-700 text-gray-500'
+                  }`}>
                     {i < currentStep ? '✓' : ''}
                   </span>
-                  <span style={{
-                    color: i <= currentStep ? 'var(--color-gray-300)' : 'var(--color-gray-600)',
-                    fontSize: '0.85rem', textAlign: 'left',
-                  }}>
+                  <span className={`text-[0.85rem] text-left ${
+                    i <= currentStep ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
                     {msg}
                   </span>
                 </div>
@@ -131,59 +112,44 @@ export default function VerifyPage() {
             </div>
 
             {/* Progress bar */}
-            <div style={{
-              width: '100%', height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2,
-            }}>
-              <div style={{
-                height: '100%', background: 'linear-gradient(90deg, var(--color-gold-dark), var(--color-gold))',
-                borderRadius: 2, width: `${progress}%`, transition: 'width 0.1s linear',
-              }} />
+            <div className="w-full h-1 bg-white/5 rounded-sm">
+              <div className="h-full bg-gradient-to-r from-gold-dark to-gold rounded-sm transition-all duration-100 ease-linear"
+                style={{ width: `${progress}%` }} />
             </div>
-            <p style={{ color: 'var(--color-gray-500)', fontSize: '0.75rem', marginTop: 12 }}>
+            <p className="text-gray-500 text-xs mt-3">
               Please wait while we verify your access…
             </p>
           </div>
         ) : (
           <div className="animate-scale-in">
             {/* Success */}
-            <div style={{
-              width: 80, height: 80, borderRadius: '50%', margin: '0 auto 32px',
-              background: 'linear-gradient(135deg, var(--color-gold-dark), var(--color-gold))',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              animation: 'pulse-gold 2s infinite',
-            }}>
-              <span style={{ fontSize: '2rem', color: 'var(--color-black)' }}>✓</span>
+            <div className="w-20 h-20 rounded-full mx-auto mb-8 bg-gradient-to-br from-gold-dark to-gold flex items-center justify-center animate-pulse-gold">
+              <span className="text-[2rem] text-black">✓</span>
             </div>
-            <h2 style={{
-              fontFamily: 'var(--font-heading)', fontSize: '1.75rem', fontWeight: 700, marginBottom: 16,
-            }}>
+            <h2 className="font-heading text-[1.75rem] font-bold mb-4">
               Verification <span className="gold-text">Complete</span>
             </h2>
-            <p style={{
-              color: 'var(--color-gray-300)', fontSize: '1rem', lineHeight: 1.7, marginBottom: 12,
-              maxWidth: 380, margin: '0 auto 40px',
-            }}>
+            <p className="text-gray-300 text-base leading-[1.7] mb-3 max-w-[380px] mx-auto pb-10">
               Congratulations — you are qualified to purchase this exclusive item.
             </p>
 
-            <div className="glass" style={{ padding: 24, borderRadius: 12, marginBottom: 32, textAlign: 'left' }}>
-              <p style={{ color: 'var(--color-gray-400)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
+            <div className="glass p-6 rounded-xl mb-8 text-left">
+              <p className="text-gray-400 text-xs uppercase tracking-[0.1em] mb-2">
                 Reserved Item
               </p>
-              <p style={{ fontWeight: 600, fontSize: '1rem', marginBottom: 4 }}>{product.name}</p>
-              <p style={{ color: 'var(--color-gold)', fontWeight: 700 }}>
+              <p className="font-semibold text-base mb-1">{product.name}</p>
+              <p className="text-gold font-bold">
                 {product.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }).replace('NGN', '₦')}
               </p>
             </div>
 
             <button
               onClick={() => router.push('/checkout')}
-              className="btn-gold"
-              style={{ width: '100%', padding: '18px', fontSize: '0.95rem' }}
+              className="btn-gold w-full p-[18px] text-[0.95rem]"
             >
               Continue to Checkout
             </button>
-            <p style={{ color: 'var(--color-gray-500)', fontSize: '0.75rem', marginTop: 16 }}>
+            <p className="text-gray-500 text-xs mt-4">
               Your reservation expires in 15 minutes
             </p>
           </div>

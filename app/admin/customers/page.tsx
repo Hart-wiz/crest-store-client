@@ -20,65 +20,55 @@ export default function AdminCustomers() {
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 4 }}>
+      <div className="mb-6">
+        <h1 className="font-heading text-2xl font-bold mb-1">
           Customers
         </h1>
-        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.85rem' }}>
+        <p className="text-gray-400 text-[0.85rem]">
           {customers.length} total customers
         </p>
       </div>
 
       {/* Search */}
-      <div style={{ marginBottom: 24 }}>
+      <div className="mb-6">
         <input
           type="text"
           placeholder="Search by name, email, or phone..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="admin-input"
-          style={{ maxWidth: 400 }}
+          className="admin-input max-w-[400px]"
         />
       </div>
 
       {/* Customers List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div className="flex flex-col gap-3">
         {filtered.map(customer => (
-          <div key={customer.id} className="admin-card" style={{ cursor: 'pointer' }}
+          <div key={customer.id} className="admin-card cursor-pointer transition-colors hover:bg-black-light"
             onClick={() => setExpanded(expanded === customer.id ? null : customer.id)}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <div style={{
-                  width: 44, height: 44, borderRadius: '50%',
-                  background: 'linear-gradient(135deg, var(--color-gold-dark), var(--color-gold))',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1rem', fontWeight: 700, color: 'var(--color-black)', flexShrink: 0,
-                }}>
+            <div className="flex justify-between items-center flex-wrap gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-gold-dark to-gold flex items-center justify-center text-base font-bold text-black shrink-0">
                   {customer.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <p style={{ fontWeight: 600, fontSize: '0.95rem', marginBottom: 2 }}>{customer.name}</p>
-                  <p style={{ color: 'var(--color-gray-400)', fontSize: '0.8rem' }}>{customer.email}</p>
+                  <p className="font-semibold text-[0.95rem] mb-0.5">{customer.name}</p>
+                  <p className="text-gray-400 text-[0.8rem]">{customer.email}</p>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--color-gray-500)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Phone</p>
-                  <p style={{ fontSize: '0.85rem', marginTop: 2 }}>{customer.phone}</p>
+              <div className="flex gap-8 items-center flex-wrap">
+                <div className="text-center">
+                  <p className="text-[0.7rem] text-gray-500 uppercase tracking-[0.08em]">Phone</p>
+                  <p className="text-[0.85rem] mt-0.5">{customer.phone}</p>
                 </div>
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--color-gray-500)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Orders</p>
-                  <p style={{ fontSize: '0.85rem', fontWeight: 600, marginTop: 2 }}>{customer.totalOrders}</p>
+                <div className="text-center">
+                  <p className="text-[0.7rem] text-gray-500 uppercase tracking-[0.08em]">Orders</p>
+                  <p className="text-[0.85rem] font-semibold mt-0.5">{customer.totalOrders}</p>
                 </div>
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--color-gray-500)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Total Spent</p>
-                  <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-gold)', marginTop: 2 }}>{formatPrice(customer.totalSpent)}</p>
+                <div className="text-center">
+                  <p className="text-[0.7rem] text-gray-500 uppercase tracking-[0.08em]">Total Spent</p>
+                  <p className="text-[0.85rem] font-semibold text-gold mt-0.5">{formatPrice(customer.totalSpent)}</p>
                 </div>
-                <span style={{
-                  fontSize: '0.8rem', color: 'var(--color-gray-400)',
-                  transform: expanded === customer.id ? 'rotate(180deg)' : 'rotate(0)',
-                  transition: 'transform 0.2s ease',
-                }}>
+                <span className={`text-[0.8rem] text-gray-400 transition-transform duration-200 ${expanded === customer.id ? 'rotate-180' : 'rotate-y-0'}`}>
                   ▼
                 </span>
               </div>
@@ -86,29 +76,21 @@ export default function AdminCustomers() {
 
             {/* Expanded Order History */}
             {expanded === customer.id && (
-              <div style={{
-                marginTop: 20, paddingTop: 20,
-                borderTop: '1px solid rgba(255,255,255,0.06)',
-                animation: 'slideDown 0.3s ease-out',
-              }}>
-                <h4 style={{ fontSize: '0.8rem', color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12, fontWeight: 700 }}>
+              <div className="mt-5 pt-5 border-t border-white/[0.06] animate-[slideDown_0.3s_ease-out]">
+                <h4 className="text-[0.8rem] text-gold uppercase tracking-[0.1em] font-bold mb-3">
                   Order History
                 </h4>
                 {getCustomerOrders(customer.orders).map(order => (
-                  <div key={order.id} style={{
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    padding: '12px 16px', background: 'rgba(255,255,255,0.02)', borderRadius: 8,
-                    marginBottom: 8,
-                  }}>
+                  <div key={order.id} className="flex justify-between items-center py-3 px-4 bg-white/[0.02] rounded-lg mb-2 border border-white/5">
                     <div>
-                      <p style={{ fontWeight: 500, fontSize: '0.85rem' }}>{order.refNumber}</p>
-                      <p style={{ color: 'var(--color-gray-500)', fontSize: '0.75rem' }}>
+                      <p className="font-medium text-[0.85rem]">{order.refNumber}</p>
+                      <p className="text-gray-500 text-[0.75rem] max-w-[300px] truncate">
                         {order.items.map(i => i.productName).join(', ')}
                       </p>
                     </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <p style={{ fontWeight: 600, color: 'var(--color-gold)', fontSize: '0.9rem' }}>{formatPrice(order.total)}</p>
-                      <span className={`status-badge status-${order.status}`} style={{ fontSize: '0.65rem', padding: '2px 8px' }}>
+                    <div className="text-right flex flex-col items-end gap-1">
+                      <p className="font-semibold text-gold text-[0.9rem]">{formatPrice(order.total)}</p>
+                      <span className={`status-badge status-${order.status} text-[0.65rem] py-0.5 px-2`}>
                         {order.status}
                       </span>
                     </div>
@@ -121,4 +103,5 @@ export default function AdminCustomers() {
       </div>
     </div>
   );
+}
 }

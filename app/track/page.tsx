@@ -38,10 +38,10 @@ export default function TrackPage() {
   const currentStepIndex = result ? statusSteps.indexOf(result.status) : -1;
 
   return (
-    <div style={{ paddingTop: 100, minHeight: '100vh' }}>
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '60px 24px 80px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <p style={{ color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 12 }}>
+    <div className="pt-[100px] min-h-screen">
+      <div className="max-w-[640px] mx-auto py-[60px] px-6 pb-[80px]">
+        <div className="text-center mb-12">
+          <p className="text-gold text-xs font-bold tracking-[0.25em] uppercase mb-3">
             Order Status
           </p>
           <h1 className="section-heading">Track Your Order</h1>
@@ -50,12 +50,9 @@ export default function TrackPage() {
 
         {/* Search Form */}
         <form onSubmit={handleSearch}>
-          <div className="glass" style={{ padding: 32, borderRadius: 12, marginBottom: 32 }}>
-            <div style={{ marginBottom: 20 }}>
-              <label style={{
-                display: 'block', fontSize: '0.75rem', textTransform: 'uppercase',
-                letterSpacing: '0.1em', color: 'var(--color-gray-400)', marginBottom: 8, fontWeight: 600,
-              }}>
+          <div className="glass p-8 rounded-xl mb-8">
+            <div className="mb-5">
+              <label className="block text-xs uppercase tracking-[0.1em] text-gray-400 mb-2 font-semibold">
                 Order Reference Number
               </label>
               <input
@@ -63,26 +60,16 @@ export default function TrackPage() {
                 placeholder="e.g., CRS-2026-0001"
                 value={refNumber}
                 onChange={e => setRefNumber(e.target.value)}
-                style={{
-                  width: '100%', padding: '14px 16px',
-                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                  color: 'var(--color-white)', fontSize: '0.9rem', outline: 'none',
-                  transition: 'border-color 0.3s ease', fontFamily: 'var(--font-body)',
-                }}
-                onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-gold)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)')}
+                className="w-full py-3.5 px-4 bg-white/5 border border-white/10 text-white text-[0.9rem] outline-none transition-colors duration-300 font-body focus:border-gold"
               />
             </div>
 
-            <div style={{ textAlign: 'center', color: 'var(--color-gray-500)', fontSize: '0.8rem', marginBottom: 20 }}>
+            <div className="text-center text-gray-500 text-[0.8rem] mb-5">
               — or —
             </div>
 
-            <div style={{ marginBottom: 24 }}>
-              <label style={{
-                display: 'block', fontSize: '0.75rem', textTransform: 'uppercase',
-                letterSpacing: '0.1em', color: 'var(--color-gray-400)', marginBottom: 8, fontWeight: 600,
-              }}>
+            <div className="mb-6">
+              <label className="block text-xs uppercase tracking-[0.1em] text-gray-400 mb-2 font-semibold">
                 Phone Number
               </label>
               <input
@@ -90,18 +77,11 @@ export default function TrackPage() {
                 placeholder="+234..."
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
-                style={{
-                  width: '100%', padding: '14px 16px',
-                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                  color: 'var(--color-white)', fontSize: '0.9rem', outline: 'none',
-                  transition: 'border-color 0.3s ease', fontFamily: 'var(--font-body)',
-                }}
-                onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-gold)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)')}
+                className="w-full py-3.5 px-4 bg-white/5 border border-white/10 text-white text-[0.9rem] outline-none transition-colors duration-300 font-body focus:border-gold"
               />
             </div>
 
-            <button type="submit" className="btn-gold" style={{ width: '100%', padding: '16px', fontSize: '0.9rem' }}>
+            <button type="submit" className="btn-gold w-full p-4 text-[0.9rem]">
               Track Order
             </button>
           </div>
@@ -110,13 +90,13 @@ export default function TrackPage() {
         {/* Results */}
         {result && (
           <div className="animate-fade-in-up">
-            <div className="glass" style={{ padding: 32, borderRadius: 12 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
+            <div className="glass p-8 rounded-xl">
+              <div className="flex justify-between items-start mb-7 flex-wrap gap-3">
                 <div>
-                  <p style={{ color: 'var(--color-gray-400)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
+                  <p className="text-gray-400 text-xs uppercase tracking-[0.1em] mb-1">
                     Order Reference
                   </p>
-                  <p style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-gold)' }}>{result.refNumber}</p>
+                  <p className="font-bold text-[1.1rem] text-gold">{result.refNumber}</p>
                 </div>
                 <span className={`status-badge status-${result.status}`}>
                   {statusLabels[result.status]}
@@ -124,39 +104,24 @@ export default function TrackPage() {
               </div>
 
               {/* Progress Timeline */}
-              <div style={{ margin: '32px 0', padding: '0 8px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
+              <div className="my-8 px-2 relative">
+                <div className="flex justify-between relative">
                   {/* Background line */}
-                  <div style={{
-                    position: 'absolute', top: 14, left: '10%', right: '10%',
-                    height: 2, background: 'var(--color-gray-800)',
-                  }} />
-                  <div style={{
-                    position: 'absolute', top: 14, left: '10%',
-                    height: 2, background: 'var(--color-gold)',
-                    width: `${(currentStepIndex / (statusSteps.length - 1)) * 80}%`,
-                    transition: 'width 0.5s ease',
-                  }} />
+                  <div className="absolute top-[14px] left-[10%] right-[10%] h-0.5 bg-gray-800" />
+                  <div className="absolute top-[14px] left-[10%] h-0.5 bg-gold transition-all duration-500"
+                    style={{ width: `${(currentStepIndex / (statusSteps.length - 1)) * 80}%` }} />
                   {statusSteps.map((step, i) => (
-                    <div key={step} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1, flex: 1 }}>
-                      <div style={{
-                        width: 28, height: 28, borderRadius: '50%',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        background: i <= currentStepIndex ? 'var(--color-gold)' : 'var(--color-gray-800)',
-                        color: i <= currentStepIndex ? 'var(--color-black)' : 'var(--color-gray-500)',
-                        fontSize: '0.65rem', fontWeight: 700,
-                        transition: 'all 0.3s ease',
-                        border: i === currentStepIndex ? '3px solid var(--color-gold-light)' : 'none',
-                        boxShadow: i === currentStepIndex ? '0 0 15px rgba(212,175,55,0.3)' : 'none',
-                      }}>
+                    <div key={step} className="flex flex-col items-center relative z-10 flex-1">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[0.65rem] font-bold transition-all duration-300 ${
+                        i <= currentStepIndex
+                          ? 'bg-gold text-black border-[3px] border-transparent'
+                          : 'bg-gray-800 text-gray-500 border-none'
+                      } ${i === currentStepIndex ? 'border-gold-light shadow-[0_0_15px_rgba(212,175,55,0.3)]' : ''}`}>
                         {i < currentStepIndex ? '✓' : i + 1}
                       </div>
-                      <span style={{
-                        fontSize: '0.65rem', marginTop: 8,
-                        color: i <= currentStepIndex ? 'var(--color-gold)' : 'var(--color-gray-600)',
-                        fontWeight: i === currentStepIndex ? 600 : 400,
-                        textAlign: 'center',
-                      }}>
+                      <span className={`text-[0.65rem] mt-2 text-center ${
+                        i <= currentStepIndex ? 'text-gold' : 'text-gray-600'
+                      } ${i === currentStepIndex ? 'font-semibold' : 'font-normal'}`}>
                         {statusLabels[step]}
                       </span>
                     </div>
@@ -165,20 +130,17 @@ export default function TrackPage() {
               </div>
 
               {/* Order Details */}
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 20, marginTop: 8 }}>
+              <div className="border-t border-white/5 pt-5 mt-2">
                 {[
                   { label: 'Customer', value: result.customerName },
                   { label: 'Items', value: result.items.map(i => i.productName).join(', ') },
                   { label: 'Total', value: `₦${result.total.toLocaleString()}` },
                   { label: 'Order Date', value: result.createdAt },
                   { label: 'Delivery', value: `${result.address}, ${result.city}, ${result.state}` },
-                ].map(item => (
-                  <div key={item.label} style={{
-                    display: 'flex', justifyContent: 'space-between', padding: '10px 0',
-                    borderBottom: '1px solid rgba(255,255,255,0.03)',
-                  }}>
-                    <span style={{ color: 'var(--color-gray-400)', fontSize: '0.85rem' }}>{item.label}</span>
-                    <span style={{ fontSize: '0.85rem', textAlign: 'right', maxWidth: '60%' }}>{item.value}</span>
+                ].map((item, idx) => (
+                  <div key={idx} className="flex justify-between py-2.5 border-b border-white/[0.03]">
+                    <span className="text-gray-400 text-[0.85rem]">{item.label}</span>
+                    <span className="text-[0.85rem] text-right max-w-[60%]">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -187,18 +149,17 @@ export default function TrackPage() {
         )}
 
         {notFound && searched && (
-          <div className="animate-fade-in" style={{ textAlign: 'center', padding: '48px 0' }}>
-            <p style={{ fontSize: '2.5rem', marginBottom: 16 }}>🔍</p>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', marginBottom: 8 }}>Order Not Found</h3>
-            <p style={{ color: 'var(--color-gray-400)', fontSize: '0.9rem', marginBottom: 24 }}>
+          <div className="animate-fade-in text-center py-12">
+            <p className="text-[2.5rem] mb-4">🔍</p>
+            <h3 className="font-heading text-xl mb-2">Order Not Found</h3>
+            <p className="text-gray-400 text-[0.9rem] mb-6">
               Please check your reference number or phone number and try again.
             </p>
             <a
               href="https://wa.me/2348012345678"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline"
-              style={{ textDecoration: 'none' }}
+              className="btn-outline no-underline"
             >
               💬 Contact Support
             </a>

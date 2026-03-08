@@ -19,85 +19,75 @@ export default function AdminDashboard() {
   return (
     <div>
       {/* Welcome */}
-      <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.75rem', fontWeight: 700, marginBottom: 4 }}>
+      <div className="mb-8">
+        <h1 className="font-heading text-[1.75rem] font-bold mb-1">
           Welcome back, <span className="gold-text">Admin</span>
         </h1>
-        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.9rem' }}>
+        <p className="text-gray-400 text-[0.9rem]">
           Here&apos;s what&apos;s happening with your store today.
         </p>
       </div>
 
       {/* Stats Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16, marginBottom: 32 }}>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4 mb-8">
         {stats.map((stat, i) => (
-          <div key={i} className="admin-card" style={{
-            opacity: 0, animation: `fadeInUp 0.5s ease-out ${i * 0.1}s forwards`,
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 16 }}>
-              <span style={{ fontSize: '1.5rem' }}>{stat.icon}</span>
-              <span style={{
-                fontSize: '0.7rem', fontWeight: 600, padding: '3px 8px', borderRadius: 12,
-                background: stat.positive ? 'rgba(56,161,105,0.15)' : 'rgba(229,62,62,0.15)',
-                color: stat.positive ? '#68D391' : '#FC8181',
-              }}>
+          <div key={i} className="admin-card opacity-0 animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: `${i * 0.1}s` }}>
+            <div className="flex justify-between items-start mb-4">
+              <span className="text-2xl">{stat.icon}</span>
+              <span className={`text-[0.7rem] font-semibold py-[3px] px-2 rounded-xl ${
+                stat.positive ? 'bg-[#38A169]/15 text-[#68D391]' : 'bg-[#E53E3E]/15 text-[#FC8181]'
+              }`}>
                 {stat.change}
               </span>
             </div>
-            <p style={{ color: 'var(--color-gray-400)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>
+            <p className="text-gray-400 text-[0.75rem] uppercase tracking-[0.08em] mb-1">
               {stat.label}
             </p>
-            <p style={{ fontSize: '1.5rem', fontWeight: 700 }}>{stat.value}</p>
+            <p className="text-2xl font-bold">{stat.value}</p>
           </div>
         ))}
       </div>
 
       {/* Charts + Recent Orders */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 32 }} className="dashboard-grid">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-8 dashboard-grid">
         {/* Revenue Chart */}
         <div className="admin-card">
-          <h3 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: 24 }}>Revenue Overview</h3>
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 200, padding: '0 8px' }}>
+          <h3 className="text-[0.95rem] font-semibold mb-6">Revenue Overview</h3>
+          <div className="flex items-end gap-3 h-[200px] px-2">
             {revenueData.map((d, i) => (
-              <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: '0.65rem', color: 'var(--color-gray-400)' }}>
+              <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                <span className="text-[0.65rem] text-gray-400">
                   {formatPrice(d.revenue).replace('₦', '')}
                 </span>
-                <div style={{
-                  width: '100%', borderRadius: '4px 4px 0 0',
-                  height: `${(d.revenue / maxRevenue) * 160}px`,
-                  background: `linear-gradient(to top, var(--color-gold-dark), var(--color-gold))`,
-                  opacity: 0.7 + (i / revenueData.length) * 0.3,
-                  transition: 'height 0.5s ease',
-                  minHeight: 10,
-                }} />
-                <span style={{ fontSize: '0.7rem', color: 'var(--color-gray-500)' }}>{d.month}</span>
+                <div className="w-full rounded-t-sm bg-gradient-to-t from-gold-dark to-gold transition-[height] duration-500 min-h-[10px]"
+                  style={{
+                    height: `${(d.revenue / maxRevenue) * 160}px`,
+                    opacity: 0.7 + (i / revenueData.length) * 0.3,
+                  }} />
+                <span className="text-[0.7rem] text-gray-500">{d.month}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Recent Orders */}
-        <div className="admin-card" style={{ overflow: 'hidden' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-            <h3 style={{ fontSize: '0.95rem', fontWeight: 600 }}>Recent Orders</h3>
-            <Link href="/admin/orders" style={{ color: 'var(--color-gold)', fontSize: '0.8rem', textDecoration: 'none' }}>
+        <div className="admin-card overflow-hidden">
+          <div className="flex justify-between items-center mb-5">
+            <h3 className="text-[0.95rem] font-semibold">Recent Orders</h3>
+            <Link href="/admin/orders" className="text-gold text-[0.8rem] no-underline hover:underline">
               View All →
             </Link>
           </div>
           <div>
             {recentOrders.map(order => (
-              <div key={order.id} style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.04)',
-              }}>
+              <div key={order.id} className="flex justify-between items-center py-3 border-b border-white/5 last:border-b-0">
                 <div>
-                  <p style={{ fontSize: '0.85rem', fontWeight: 500, marginBottom: 2 }}>{order.customerName}</p>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--color-gray-500)' }}>{order.refNumber}</p>
+                  <p className="text-[0.85rem] font-medium mb-0.5">{order.customerName}</p>
+                  <p className="text-[0.75rem] text-gray-500">{order.refNumber}</p>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-gold)' }}>{formatPrice(order.total)}</p>
-                  <span className={`status-badge status-${order.status}`} style={{ fontSize: '0.65rem', padding: '2px 8px' }}>
+                <div className="text-right">
+                  <p className="text-[0.85rem] font-semibold text-gold mb-1">{formatPrice(order.total)}</p>
+                  <span className={`status-badge status-${order.status} text-[0.65rem] py-0.5 px-2`}>
                     {order.status}
                   </span>
                 </div>
@@ -109,46 +99,39 @@ export default function AdminDashboard() {
 
       {/* Product Performance */}
       <div className="admin-card">
-        <h3 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: 20 }}>Top Products</h3>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.slice(0, 5).map(p => (
-              <tr key={p.id}>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{
-                      width: 40, height: 40, borderRadius: 6, background: 'var(--color-gray-900)',
-                      overflow: 'hidden', position: 'relative', flexShrink: 0,
-                    }}>
-                      <img src={p.images[0]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                    <span style={{ fontWeight: 500 }}>{p.name}</span>
-                  </div>
-                </td>
-                <td style={{ color: 'var(--color-gray-400)' }}>{p.category}</td>
-                <td style={{ color: 'var(--color-gold)', fontWeight: 600 }}>{formatPrice(p.price)}</td>
-                <td>{p.stock}</td>
-                <td>{p.isExclusive ? <span className="badge-exclusive" style={{ position: 'static' }}>Exclusive</span> : <span style={{ color: 'var(--color-gray-400)', fontSize: '0.8rem' }}>Standard</span>}</td>
+        <h3 className="text-[0.95rem] font-semibold mb-5">Top Products</h3>
+        <div className="overflow-x-auto">
+          <table className="admin-table w-full min-w-[600px]">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.slice(0, 5).map(p => (
+                <tr key={p.id}>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-md bg-gray-900 overflow-hidden relative shrink-0">
+                        <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
+                      </div>
+                      <span className="font-medium">{p.name}</span>
+                    </div>
+                  </td>
+                  <td className="text-gray-400">{p.category}</td>
+                  <td className="text-gold font-semibold">{formatPrice(p.price)}</td>
+                  <td>{p.stock}</td>
+                  <td>{p.isExclusive ? <span className="badge-exclusive static">Exclusive</span> : <span className="text-gray-400 text-sm">Standard</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-
-      <style jsx global>{`
-        @media (max-width: 768px) {
-          .dashboard-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </div>
   );
 }

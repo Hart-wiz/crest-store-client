@@ -43,11 +43,8 @@ export default function CheckoutPage() {
   ];
 
   const InputField = ({ label, field, type = 'text', placeholder }: { label: string; field: string; type?: string; placeholder: string }) => (
-    <div style={{ marginBottom: 20 }}>
-      <label style={{
-        display: 'block', fontSize: '0.75rem', textTransform: 'uppercase',
-        letterSpacing: '0.1em', color: 'var(--color-gray-400)', marginBottom: 8, fontWeight: 600,
-      }}>
+    <div className="mb-5">
+      <label className="block text-xs uppercase tracking-[0.1em] text-gray-400 mb-2 font-semibold">
         {label}
       </label>
       <input
@@ -55,80 +52,69 @@ export default function CheckoutPage() {
         placeholder={placeholder}
         value={(form as Record<string, string>)[field]}
         onChange={e => handleChange(field, e.target.value)}
-        style={{
-          width: '100%', padding: '14px 16px',
-          background: 'rgba(255,255,255,0.04)', border: errors[field] ? '1px solid var(--color-danger)' : '1px solid rgba(255,255,255,0.08)',
-          color: 'var(--color-white)', fontSize: '0.9rem', outline: 'none',
-          transition: 'border-color 0.3s ease', fontFamily: 'var(--font-body)',
-        }}
-        onFocus={e => { if (!errors[field]) e.currentTarget.style.borderColor = 'var(--color-gold)'; }}
-        onBlur={e => { if (!errors[field]) e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+        className={`w-full py-3.5 px-4 bg-white/5 border text-white text-[0.9rem] outline-none transition-colors duration-300 font-body ${
+          errors[field] ? 'border-danger' : 'border-white/10 focus:border-gold'
+        }`}
       />
       {errors[field] && (
-        <p style={{ color: 'var(--color-danger)', fontSize: '0.75rem', marginTop: 4 }}>{errors[field]}</p>
+        <p className="text-danger text-xs mt-1">{errors[field]}</p>
       )}
     </div>
   );
 
   return (
-    <div style={{ paddingTop: 100, minHeight: '100vh' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '40px 24px 80px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <p style={{ color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 12 }}>
+    <div className="pt-[100px] min-h-screen">
+      <div className="max-w-[900px] mx-auto py-10 px-6 pb-20">
+        <div className="text-center mb-12">
+          <p className="text-gold text-xs font-bold tracking-[0.25em] uppercase mb-3">
             Secure Checkout
           </p>
           <h1 className="section-heading">Complete Your Order</h1>
           <p className="section-subheading">No account required. Fast, simple, and secure.</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 48 }} className="checkout-grid">
+        <div className="md:grid md:grid-cols-[1fr_380px] md:gap-12 block checkout-grid">
           {/* Form */}
-          <form onSubmit={handleSubmit}>
-            <div className="glass" style={{ padding: 32, borderRadius: 12 }}>
-              <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 24, letterSpacing: '0.05em' }}>
+          <form onSubmit={handleSubmit} className="mb-10 md:mb-0">
+            <div className="glass p-8 rounded-xl">
+              <h2 className="text-base font-bold mb-6 tracking-[0.05em]">
                 Delivery Information
               </h2>
               <InputField label="Full Name" field="fullName" placeholder="Enter your full name" />
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
                 <InputField label="Email Address" field="email" type="email" placeholder="you@example.com" />
                 <InputField label="Phone Number" field="phone" type="tel" placeholder="+234 801 234 5678" />
               </div>
               <InputField label="Delivery Address" field="address" placeholder="Street address" />
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
                 <InputField label="City" field="city" placeholder="e.g., Lagos" />
-                <div style={{ marginBottom: 20 }}>
-                  <label style={{
-                    display: 'block', fontSize: '0.75rem', textTransform: 'uppercase',
-                    letterSpacing: '0.1em', color: 'var(--color-gray-400)', marginBottom: 8, fontWeight: 600,
-                  }}>
+                <div className="mb-5">
+                  <label className="block text-xs uppercase tracking-[0.1em] text-gray-400 mb-2 font-semibold">
                     State
                   </label>
                   <select
                     value={form.state}
                     onChange={e => handleChange('state', e.target.value)}
+                    className={`w-full py-3.5 px-4 appearance-none bg-white/5 border text-[0.9rem] outline-none font-body ${
+                      errors.state ? 'border-danger' : 'border-white/10'
+                    } ${form.state ? 'text-white' : 'text-gray-500'}`}
                     style={{
-                      width: '100%', padding: '14px 16px', appearance: 'none',
-                      background: 'rgba(255,255,255,0.04)', border: errors.state ? '1px solid var(--color-danger)' : '1px solid rgba(255,255,255,0.08)',
-                      color: form.state ? 'var(--color-white)' : 'var(--color-gray-500)',
-                      fontSize: '0.9rem', outline: 'none', fontFamily: 'var(--font-body)',
                       backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b6b6b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                       backgroundPosition: 'right 12px center', backgroundRepeat: 'no-repeat', backgroundSize: '20px',
                     }}
                   >
                     <option value="">Select state</option>
                     {nigerianStates.map(s => (
-                      <option key={s} value={s} style={{ background: 'var(--color-black)', color: 'var(--color-white)' }}>{s}</option>
+                      <option key={s} value={s} className="bg-black text-white">{s}</option>
                     ))}
                   </select>
                   {errors.state && (
-                    <p style={{ color: 'var(--color-danger)', fontSize: '0.75rem', marginTop: 4 }}>{errors.state}</p>
+                    <p className="text-danger text-xs mt-1">{errors.state}</p>
                   )}
                 </div>
               </div>
 
-              <button type="submit" className="btn-gold" style={{
-                width: '100%', padding: '16px', fontSize: '0.9rem', marginTop: 8,
-              }}>
+              <button type="submit" className="btn-gold w-full p-4 text-[0.9rem] mt-2">
                 Proceed to Payment
               </button>
             </div>
@@ -136,27 +122,27 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div>
-            <div className="glass" style={{ padding: 28, borderRadius: 12, position: 'sticky', top: 100 }}>
-              <h3 style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.05em', marginBottom: 20, textTransform: 'uppercase', color: 'var(--color-gold)' }}>
+            <div className="glass p-7 rounded-xl sticky top-[100px]">
+              <h3 className="text-[0.85rem] font-bold tracking-[0.05em] mb-5 uppercase text-gold">
                 Order Summary
               </h3>
-              <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 16, marginBottom: 16 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: '0.85rem' }}>
-                  <span style={{ color: 'var(--color-gray-400)' }}>Subtotal</span>
+              <div className="border-b border-white/5 pb-4 mb-4">
+                <div className="flex justify-between mb-2 text-[0.85rem]">
+                  <span className="text-gray-400">Subtotal</span>
                   <span>₦45,000</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: '0.85rem' }}>
-                  <span style={{ color: 'var(--color-gray-400)' }}>Delivery</span>
-                  <span style={{ color: 'var(--color-success)' }}>Free</span>
+                <div className="flex justify-between mb-2 text-[0.85rem]">
+                  <span className="text-gray-400">Delivery</span>
+                  <span className="text-success">Free</span>
                 </div>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 700 }}>
+              <div className="flex justify-between text-[1.1rem] font-bold">
                 <span>Total</span>
                 <span className="gold-text">₦45,000</span>
               </div>
 
-              <div style={{ marginTop: 24, padding: '16px', background: 'rgba(212,175,55,0.05)', borderRadius: 8, border: '1px solid rgba(212,175,55,0.1)' }}>
-                <p style={{ fontSize: '0.75rem', color: 'var(--color-gray-400)', lineHeight: 1.6 }}>
+              <div className="mt-6 p-4 bg-[rgba(212,175,55,0.05)] rounded-lg border border-[rgba(212,175,55,0.1)]">
+                <p className="text-xs text-gray-400 leading-[1.6]">
                   🔒 Your payment information is encrypted and secure. We never store your card details.
                 </p>
               </div>
@@ -166,9 +152,7 @@ export default function CheckoutPage() {
       </div>
 
       <style jsx global>{`
-        @media (max-width: 768px) {
-          .checkout-grid { grid-template-columns: 1fr !important; }
-        }
+        /* Removed as Tailwind md: modifiers replace this css */
       `}</style>
     </div>
   );

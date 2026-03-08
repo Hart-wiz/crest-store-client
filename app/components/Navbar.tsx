@@ -21,34 +21,27 @@ export default function Navbar() {
   return (
     <>
       <nav
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          padding: scrolled ? '12px 0' : '20px 0',
-          background: scrolled ? 'rgba(10,10,10,0.95)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(12px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
-          transition: 'all 0.4s ease',
-        }}
+        className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out ${
+          scrolled
+            ? 'py-3 bg-black/95 backdrop-blur-md border-b border-white/5'
+            : 'py-5 bg-transparent border-b border-transparent'
+        }`}
       >
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Link href="/" className="no-underline flex items-center gap-2">
             <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
               <path d="M20 4L4 14V26L20 36L36 26V14L20 4Z" stroke="#D4AF37" strokeWidth="2.5" fill="none"/>
               <path d="M20 10L28 15V25L20 30L12 25V15L20 10Z" fill="#D4AF37" opacity="0.15"/>
               <path d="M20 8L10 14V26L20 32L30 26V14L20 8Z" stroke="#D4AF37" strokeWidth="1.5" fill="none"/>
             </svg>
-            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, letterSpacing: '0.15em', color: 'var(--color-white)' }}>
+            <span className="font-heading text-2xl font-bold tracking-[0.15em] text-white">
               CREST
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div style={{ display: 'flex', gap: 36, alignItems: 'center' }} className="nav-desktop">
+          <div className="hidden md:flex gap-9 items-center nav-desktop">
             {[
               { label: 'Home', href: '/' },
               { label: 'Shop', href: '/shop' },
@@ -57,56 +50,32 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="link-underline"
-                style={{
-                  textDecoration: 'none',
-                  color: 'var(--color-gray-300)',
-                  fontSize: '0.85rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  transition: 'color 0.3s ease',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-gold)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-gray-300)')}
+                className="link-underline no-underline text-gray-300 hover:text-gold text-[0.85rem] font-medium tracking-[0.08em] uppercase transition-colors duration-300"
               >
                 {link.label}
               </Link>
             ))}
-            <Link href="/shop" className="btn-gold" style={{ textDecoration: 'none', padding: '10px 24px', fontSize: '0.8rem' }}>
+            <Link href="/shop" className="btn-gold py-2.5 px-6 text-xs">
               Shop Now
             </Link>
           </div>
 
           {/* Mobile Hamburger */}
           <button
-            className="nav-mobile-btn"
+            className="md:hidden bg-none border-none cursor-pointer p-2 z-[1100] nav-mobile-btn flex items-center"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
-            style={{
-              display: 'none',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 8,
-              zIndex: 1100,
-            }}
           >
-            <div style={{ width: 24, display: 'flex', flexDirection: 'column', gap: mobileOpen ? 0 : 5, position: 'relative' }}>
-              <span style={{
-                display: 'block', height: 2, background: 'var(--color-gold)', borderRadius: 2, transition: 'all 0.3s ease',
-                transform: mobileOpen ? 'rotate(45deg) translateY(0px)' : 'none',
-                position: mobileOpen ? 'absolute' : 'relative', top: mobileOpen ? '50%' : 'auto',
-              }}>&nbsp;</span>
-              <span style={{
-                display: 'block', height: 2, background: 'var(--color-gold)', borderRadius: 2, transition: 'all 0.3s ease',
-                opacity: mobileOpen ? 0 : 1, width: '70%',
-              }}>&nbsp;</span>
-              <span style={{
-                display: 'block', height: 2, background: 'var(--color-gold)', borderRadius: 2, transition: 'all 0.3s ease',
-                transform: mobileOpen ? 'rotate(-45deg) translateY(0px)' : 'none',
-                position: mobileOpen ? 'absolute' : 'relative', top: mobileOpen ? '50%' : 'auto',
-              }}>&nbsp;</span>
+            <div className={`w-6 flex flex-col relative ${mobileOpen ? 'gap-0' : 'gap-[5px]'}`}>
+              <span className={`block h-[2px] bg-gold rounded transition-all duration-300 ${
+                mobileOpen ? 'absolute top-1/2 rotate-45 w-full' : 'relative w-full'
+              }`}>&nbsp;</span>
+              <span className={`block h-[2px] bg-gold rounded transition-all duration-300 w-[70%] ${
+                mobileOpen ? 'opacity-0' : 'opacity-100'
+              }`}>&nbsp;</span>
+              <span className={`block h-[2px] bg-gold rounded transition-all duration-300 ${
+                mobileOpen ? 'absolute top-1/2 -rotate-45 w-full' : 'relative w-full'
+              }`}>&nbsp;</span>
             </div>
           </button>
         </div>
@@ -115,12 +84,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileOpen && (
         <div
-          style={{
-            position: 'fixed', inset: 0, zIndex: 1050,
-            background: 'rgba(10,10,10,0.98)', backdropFilter: 'blur(20px)',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 36,
-            animation: 'fadeIn 0.3s ease-out',
-          }}
+          className="fixed inset-0 z-[1050] bg-black/98 backdrop-blur-[20px] flex flex-col items-center justify-center gap-9 animate-fade-in"
         >
           {[
             { label: 'Home', href: '/' },
@@ -131,17 +95,8 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              style={{
-                textDecoration: 'none',
-                color: 'var(--color-white)',
-                fontSize: '1.5rem',
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 600,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                opacity: 0,
-                animation: `fadeInUp 0.4s ease-out ${i * 0.1}s forwards`,
-              }}
+              className="no-underline text-white text-2xl font-heading font-semibold tracking-[0.1em] uppercase opacity-0"
+              style={{ animation: `fadeInUp 0.4s ease-out ${i * 0.1}s forwards` }}
             >
               {link.label}
             </Link>
@@ -149,23 +104,13 @@ export default function Navbar() {
           <Link
             href="/shop"
             onClick={() => setMobileOpen(false)}
-            className="btn-gold"
-            style={{
-              textDecoration: 'none', marginTop: 16, padding: '14px 48px',
-              opacity: 0, animation: 'fadeInUp 0.4s ease-out 0.3s forwards',
-            }}
+            className="btn-gold no-underline mt-4 py-3.5 px-12 opacity-0"
+            style={{ animation: 'fadeInUp 0.4s ease-out 0.3s forwards' }}
           >
             Shop Now
           </Link>
         </div>
       )}
-
-      <style jsx global>{`
-        @media (max-width: 768px) {
-          .nav-desktop { display: none !important; }
-          .nav-mobile-btn { display: flex !important; }
-        }
-      `}</style>
     </>
   );
 }

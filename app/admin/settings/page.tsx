@@ -15,31 +15,28 @@ export default function AdminSettings() {
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 4 }}>
+      <div className="mb-8">
+        <h1 className="font-heading text-2xl font-bold mb-1">
           Settings
         </h1>
-        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.85rem' }}>
+        <p className="text-gray-400 text-[0.85rem]">
           Manage your store configuration and account
         </p>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: 4, marginBottom: 32, borderBottom: '1px solid rgba(255,255,255,0.06)', flexWrap: 'wrap' }}>
+      <div className="flex gap-1 mb-8 border-b border-white/[0.06] flex-wrap">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            style={{
-              padding: '12px 20px', fontSize: '0.85rem', cursor: 'pointer',
-              background: 'none', border: 'none', fontFamily: 'var(--font-body)',
-              color: activeTab === tab.id ? 'var(--color-gold)' : 'var(--color-gray-500)',
-              fontWeight: activeTab === tab.id ? 600 : 400,
-              borderBottom: activeTab === tab.id ? '2px solid var(--color-gold)' : '2px solid transparent',
-              transition: 'all 0.2s ease',
-            }}
+            className={`py-3 px-5 text-[0.85rem] cursor-pointer bg-transparent font-body transition-all duration-200 border-b-2 ${
+              activeTab === tab.id
+                ? 'text-gold font-semibold border-gold'
+                : 'text-gray-500 font-normal border-transparent hover:text-gray-300'
+            }`}
           >
-            <span style={{ marginRight: 8 }}>{tab.icon}</span>
+            <span className="mr-2">{tab.icon}</span>
             {tab.label}
           </button>
         ))}
@@ -47,46 +44,46 @@ export default function AdminSettings() {
 
       {/* Store Info */}
       {activeTab === 'store' && (
-        <div className="admin-card animate-fade-in" style={{ maxWidth: 640 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 24 }}>Store Information</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div className="admin-card animate-fade-in max-w-[640px]">
+          <h3 className="text-base font-semibold mb-6">Store Information</h3>
+          <div className="flex flex-col gap-4.5">
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Store Name
               </label>
               <input className="admin-input" defaultValue="Crest — Premium Streetwear" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Store Tagline
               </label>
               <input className="admin-input" defaultValue="Wear the Crown, Own the Streets" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Contact Email
               </label>
               <input className="admin-input" type="email" defaultValue="hello@crest.store" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Contact Phone
               </label>
               <input className="admin-input" type="tel" defaultValue="+234 801 234 5678" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Store Description
               </label>
-              <textarea className="admin-input" defaultValue="Premium streetwear for those who dare to stand out. Crafted with uncompromising quality and bold vision." />
+              <textarea className="admin-input min-h-[100px]" defaultValue="Premium streetwear for those who dare to stand out. Crafted with uncompromising quality and bold vision." />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 WhatsApp Number
               </label>
               <input className="admin-input" defaultValue="+234 801 234 5678" />
             </div>
-            <button className="btn-gold" style={{ alignSelf: 'flex-start', padding: '12px 32px' }}>
+            <button className="btn-gold self-start py-3 px-8 mt-2">
               Save Changes
             </button>
           </div>
@@ -95,11 +92,11 @@ export default function AdminSettings() {
 
       {/* Payment */}
       {activeTab === 'payment' && (
-        <div className="admin-card animate-fade-in" style={{ maxWidth: 640 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 24 }}>Payment Configuration</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div className="admin-card animate-fade-in max-w-[640px]">
+          <h3 className="text-base font-semibold mb-6">Payment Configuration</h3>
+          <div className="flex flex-col gap-4.5">
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Payment Gateway
               </label>
               <select className="admin-input" defaultValue="paystack">
@@ -109,19 +106,19 @@ export default function AdminSettings() {
               </select>
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 API Public Key
               </label>
               <input className="admin-input" type="password" defaultValue="pk_test_xxxxxxxxxxxx" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 API Secret Key
               </label>
               <input className="admin-input" type="password" defaultValue="sk_test_xxxxxxxxxxxx" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Currency
               </label>
               <select className="admin-input" defaultValue="NGN">
@@ -130,15 +127,12 @@ export default function AdminSettings() {
                 <option value="GBP">British Pound (£)</option>
               </select>
             </div>
-            <div style={{
-              padding: 16, background: 'rgba(56,161,105,0.08)', borderRadius: 8,
-              border: '1px solid rgba(56,161,105,0.2)',
-            }}>
-              <p style={{ color: '#68D391', fontSize: '0.85rem', fontWeight: 600 }}>
+            <div className="p-4 bg-[#38A169]/10 rounded-lg border border-[#38A169]/20 mt-2">
+              <p className="text-[#68D391] text-[0.85rem] font-semibold">
                 ✅ Payment gateway is connected and active
               </p>
             </div>
-            <button className="btn-gold" style={{ alignSelf: 'flex-start', padding: '12px 32px' }}>
+            <button className="btn-gold self-start py-3 px-8 mt-2">
               Save Payment Settings
             </button>
           </div>
@@ -147,29 +141,29 @@ export default function AdminSettings() {
 
       {/* Delivery */}
       {activeTab === 'delivery' && (
-        <div className="admin-card animate-fade-in" style={{ maxWidth: 640 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 24 }}>Delivery Settings</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div className="admin-card animate-fade-in max-w-[640px]">
+          <h3 className="text-base font-semibold mb-6">Delivery Settings</h3>
+          <div className="flex flex-col gap-4.5">
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Free Delivery Threshold (₦)
               </label>
               <input className="admin-input" type="number" defaultValue="30000" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Standard Delivery Fee (₦)
               </label>
               <input className="admin-input" type="number" defaultValue="2500" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Estimated Delivery Time
               </label>
               <input className="admin-input" defaultValue="3-5 Business Days" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Delivery Partner
               </label>
               <select className="admin-input" defaultValue="gig">
@@ -179,16 +173,13 @@ export default function AdminSettings() {
                 <option value="custom">Custom / In-house</option>
               </select>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{
-                width: 44, height: 24, borderRadius: 12, padding: 2,
-                background: 'var(--color-gold)', cursor: 'pointer',
-              }}>
-                <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'white', transform: 'translateX(20px)', transition: 'transform 0.3s ease' }} />
+            <div className="flex items-center gap-3 mt-2">
+              <div className="w-11 h-6 rounded-full p-0.5 bg-gold cursor-pointer flex items-center">
+                <div className="w-5 h-5 rounded-full bg-white transform translate-x-5 transition-transform duration-300 ease-in-out" />
               </div>
-              <span style={{ fontSize: '0.85rem', color: 'var(--color-gray-300)' }}>Enable order tracking notifications</span>
+              <span className="text-[0.85rem] text-gray-300">Enable order tracking notifications</span>
             </div>
-            <button className="btn-gold" style={{ alignSelf: 'flex-start', padding: '12px 32px' }}>
+            <button className="btn-gold self-start py-3 px-8 mt-4">
               Save Delivery Settings
             </button>
           </div>
@@ -197,48 +188,43 @@ export default function AdminSettings() {
 
       {/* Admin Account */}
       {activeTab === 'account' && (
-        <div className="admin-card animate-fade-in" style={{ maxWidth: 640 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 24 }}>Admin Account</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 8 }}>
-              <div style={{
-                width: 64, height: 64, borderRadius: '50%',
-                background: 'linear-gradient(135deg, var(--color-gold-dark), var(--color-gold))',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-black)',
-              }}>
+        <div className="admin-card animate-fade-in max-w-[640px]">
+          <h3 className="text-base font-semibold mb-6">Admin Account</h3>
+          <div className="flex flex-col gap-4.5">
+            <div className="flex items-center gap-5 mb-2">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold-dark to-gold flex items-center justify-center text-2xl font-bold text-black shrink-0">
                 A
               </div>
               <div>
-                <p style={{ fontWeight: 600, fontSize: '1.1rem' }}>Admin User</p>
-                <p style={{ color: 'var(--color-gray-500)', fontSize: '0.85rem' }}>admin@crest.store</p>
+                <p className="font-semibold text-[1.1rem] mb-1">Admin User</p>
+                <p className="text-gray-500 text-[0.85rem]">admin@crest.store</p>
               </div>
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Full Name
               </label>
               <input className="admin-input" defaultValue="Admin User" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Email Address
               </label>
               <input className="admin-input" type="email" defaultValue="admin@crest.store" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Change Password
               </label>
               <input className="admin-input" type="password" placeholder="Enter new password" />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold uppercase tracking-[0.08em]">
                 Confirm Password
               </label>
               <input className="admin-input" type="password" placeholder="Confirm new password" />
             </div>
-            <button className="btn-gold" style={{ alignSelf: 'flex-start', padding: '12px 32px' }}>
+            <button className="btn-gold self-start py-3 px-8 mt-2">
               Update Account
             </button>
           </div>

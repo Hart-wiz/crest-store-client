@@ -21,56 +21,47 @@ export default function ShopPage() {
   });
 
   const FilterSidebar = () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+    <div className="flex flex-col gap-8 w-full">
       {/* Categories */}
       <div>
-        <h3 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-gold)', marginBottom: 16, fontWeight: 700 }}>Category</h3>
+        <h3 className="text-xs uppercase tracking-[0.12em] text-gold mb-4 font-bold">Category</h3>
         {['All', ...categories].map(cat => (
-          <button key={cat} onClick={() => setSelectedCategory(cat)} style={{
-            display: 'block', width: '100%', textAlign: 'left', padding: '10px 14px', marginBottom: 4,
-            background: selectedCategory === cat ? 'rgba(212,175,55,0.1)' : 'transparent',
-            border: 'none', color: selectedCategory === cat ? 'var(--color-gold)' : 'var(--color-gray-400)',
-            cursor: 'pointer', fontSize: '0.85rem', fontWeight: selectedCategory === cat ? 600 : 400,
-            borderLeft: selectedCategory === cat ? '2px solid var(--color-gold)' : '2px solid transparent',
-            transition: 'all 0.2s ease', fontFamily: 'var(--font-body)',
-          }}>
+          <button key={cat} onClick={() => setSelectedCategory(cat)} className={`block w-full text-left py-2.5 px-3.5 mb-1 cursor-pointer text-[0.85rem] font-body transition-all duration-200 border-l-2 ${
+            selectedCategory === cat
+              ? 'bg-[rgba(212,175,55,0.1)] text-gold font-semibold border-gold'
+              : 'bg-transparent text-gray-400 font-normal border-transparent'
+          }`}>
             {cat}
           </button>
         ))}
       </div>
       {/* Collections */}
       <div>
-        <h3 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-gold)', marginBottom: 16, fontWeight: 700 }}>Collection</h3>
+        <h3 className="text-xs uppercase tracking-[0.12em] text-gold mb-4 font-bold">Collection</h3>
         {['All', ...collections].map(col => (
-          <button key={col} onClick={() => setSelectedCollection(col)} style={{
-            display: 'block', width: '100%', textAlign: 'left', padding: '10px 14px', marginBottom: 4,
-            background: selectedCollection === col ? 'rgba(212,175,55,0.1)' : 'transparent',
-            border: 'none', color: selectedCollection === col ? 'var(--color-gold)' : 'var(--color-gray-400)',
-            cursor: 'pointer', fontSize: '0.85rem', fontWeight: selectedCollection === col ? 600 : 400,
-            borderLeft: selectedCollection === col ? '2px solid var(--color-gold)' : '2px solid transparent',
-            transition: 'all 0.2s ease', fontFamily: 'var(--font-body)',
-          }}>
+          <button key={col} onClick={() => setSelectedCollection(col)} className={`block w-full text-left py-2.5 px-3.5 mb-1 cursor-pointer text-[0.85rem] font-body transition-all duration-200 border-l-2 ${
+            selectedCollection === col
+              ? 'bg-[rgba(212,175,55,0.1)] text-gold font-semibold border-gold'
+              : 'bg-transparent text-gray-400 font-normal border-transparent'
+          }`}>
             {col}
           </button>
         ))}
       </div>
       {/* Price Range */}
       <div>
-        <h3 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-gold)', marginBottom: 16, fontWeight: 700 }}>Price Range</h3>
+        <h3 className="text-xs uppercase tracking-[0.12em] text-gold mb-4 font-bold">Price Range</h3>
         {[
           { label: 'All Prices', value: 'All' },
           { label: 'Under ₦20,000', value: 'under20k' },
           { label: '₦20,000 – ₦50,000', value: '20k-50k' },
           { label: 'Above ₦50,000', value: 'above50k' },
         ].map(pr => (
-          <button key={pr.value} onClick={() => setPriceRange(pr.value)} style={{
-            display: 'block', width: '100%', textAlign: 'left', padding: '10px 14px', marginBottom: 4,
-            background: priceRange === pr.value ? 'rgba(212,175,55,0.1)' : 'transparent',
-            border: 'none', color: priceRange === pr.value ? 'var(--color-gold)' : 'var(--color-gray-400)',
-            cursor: 'pointer', fontSize: '0.85rem', fontWeight: priceRange === pr.value ? 600 : 400,
-            borderLeft: priceRange === pr.value ? '2px solid var(--color-gold)' : '2px solid transparent',
-            transition: 'all 0.2s ease', fontFamily: 'var(--font-body)',
-          }}>
+          <button key={pr.value} onClick={() => setPriceRange(pr.value)} className={`block w-full text-left py-2.5 px-3.5 mb-1 cursor-pointer text-[0.85rem] font-body transition-all duration-200 border-l-2 ${
+            priceRange === pr.value
+              ? 'bg-[rgba(212,175,55,0.1)] text-gold font-semibold border-gold'
+              : 'bg-transparent text-gray-400 font-normal border-transparent'
+          }`}>
             {pr.label}
           </button>
         ))}
@@ -79,90 +70,68 @@ export default function ShopPage() {
   );
 
   return (
-    <div style={{ paddingTop: 100 }}>
+    <div className="pt-[100px]">
       {/* Header */}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 24px 0' }}>
-        <p style={{ color: 'var(--color-gold)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 8 }}>
+      <div className="max-w-[1280px] mx-auto pt-10 px-6">
+        <p className="text-gold text-[0.75rem] font-bold tracking-[0.25em] uppercase mb-2">
           The Collection
         </p>
-        <h1 className="section-heading" style={{ marginBottom: 8 }}>Shop All</h1>
-        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.9rem' }}>
+        <h1 className="section-heading mb-2">Shop All</h1>
+        <p className="text-gray-400 text-[0.9rem]">
           {filtered.length} product{filtered.length !== 1 ? 's' : ''}
         </p>
       </div>
 
       {/* Mobile Filter Toggle */}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 24px' }} className="mobile-filter-toggle">
+      <div className="max-w-[1280px] mx-auto py-4 px-6 md:hidden">
         <button
           onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-          style={{
-            display: 'none', padding: '10px 20px', background: 'transparent',
-            border: '1px solid var(--color-gray-700)', color: 'var(--color-gray-300)',
-            cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'var(--font-body)',
-          }}
-          className="filter-btn-mobile"
+          className="py-2.5 px-5 bg-transparent border border-gray-700 text-gray-300 cursor-pointer text-[0.85rem] font-body block"
         >
           ☰ Filters
         </button>
       </div>
 
       {/* Main Content */}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '24px', display: 'grid', gridTemplateColumns: '240px 1fr', gap: 40 }}>
+      <div className="max-w-[1280px] mx-auto p-6 md:grid md:grid-cols-[240px_1fr] md:gap-10 block">
         {/* Desktop Sidebar */}
-        <aside className="filter-sidebar">
+        <aside className="hidden md:block filter-sidebar">
           <FilterSidebar />
         </aside>
 
         {/* Product Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20, alignContent: 'start' }}>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5 content-start">
           {filtered.map((product, i) => (
-            <Link href={`/product/${product.id}`} key={product.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="card-hover" style={{
-                background: 'var(--color-black-lighter)', border: '1px solid rgba(255,255,255,0.06)',
-                overflow: 'hidden', position: 'relative',
-                opacity: 0, animation: `fadeInUp 0.5s ease-out ${i * 0.05}s forwards`,
-              }}>
+            <Link href={`/product/${product.id}`} key={product.id} className="no-underline text-inherit block">
+              <div className="card-hover bg-black-lighter border border-white/5 overflow-hidden relative opacity-0 group"
+                style={{ animation: `fadeInUp 0.5s ease-out ${i * 0.05}s forwards` }}
+              >
                 {product.isExclusive && <span className="badge-exclusive">Exclusive</span>}
-                <div style={{ position: 'relative', paddingTop: '120%', background: 'var(--color-gray-900)', overflow: 'hidden' }}>
-                  <Image src={product.images[0]} alt={product.name} fill style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
-                    onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.05)')}
-                    onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
-                  />
-                  <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: 14,
-                    background: 'linear-gradient(to top, rgba(10,10,10,0.95), transparent)',
-                    transform: 'translateY(100%)', transition: 'transform 0.3s ease',
-                  }} className="quick-buy-overlay">
-                    <span style={{
-                      display: 'block', textAlign: 'center', padding: '10px',
-                      background: 'linear-gradient(135deg, var(--color-gold-dark), var(--color-gold))',
-                      color: 'var(--color-black)', fontWeight: 700, fontSize: '0.75rem',
-                      letterSpacing: '0.1em', textTransform: 'uppercase',
-                    }}>
+                <div className="relative pt-[120%] bg-gray-900 overflow-hidden">
+                  <Image src={product.images[0]} alt={product.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-gradient-to-t from-black/95 to-transparent translate-y-[100%] transition-transform duration-300 group-hover:translate-y-0 relative-overlay z-10">
+                    <span className="block text-center p-2.5 bg-gradient-to-br from-gold-dark to-gold text-black font-bold text-[0.75rem] tracking-[0.1em] uppercase">
                       Quick View
                     </span>
                   </div>
                 </div>
-                <div style={{ padding: '16px 14px' }}>
-                  <p style={{ color: 'var(--color-gray-500)', fontSize: '0.7rem', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>
+                <div className="py-4 px-3.5 relative z-20 bg-black-lighter">
+                  <p className="text-gray-500 text-[0.7rem] tracking-[0.08em] uppercase mb-1">
                     {product.collection}
                   </p>
-                  <h3 style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: 8 }}>{product.name}</h3>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ color: 'var(--color-gold)', fontWeight: 700 }}>{formatPrice(product.price)}</span>
+                  <h3 className="text-[0.9rem] font-semibold mb-2">{product.name}</h3>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-gold font-bold">{formatPrice(product.price)}</span>
                     {product.originalPrice && (
-                      <span style={{ color: 'var(--color-gray-600)', textDecoration: 'line-through', fontSize: '0.8rem' }}>
+                      <span className="text-gray-600 line-through text-[0.8rem]">
                         {formatPrice(product.originalPrice)}
                       </span>
                     )}
                   </div>
                   {/* Color dots */}
-                  <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+                  <div className="flex gap-1.5 mt-2.5">
                     {product.colors.map(c => (
-                      <span key={c.hex} style={{
-                        width: 14, height: 14, borderRadius: '50%', background: c.hex,
-                        border: '1.5px solid rgba(255,255,255,0.2)', display: 'inline-block',
-                      }} title={c.name} />
+                      <span key={c.hex} title={c.name} className="w-3.5 h-3.5 rounded-full border-[1.5px] border-white/20 inline-block" style={{ background: c.hex }} />
                     ))}
                   </div>
                 </div>
@@ -170,11 +139,11 @@ export default function ShopPage() {
             </Link>
           ))}
           {filtered.length === 0 && (
-            <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '80px 0' }}>
-              <p style={{ fontSize: '3rem', marginBottom: 16 }}>♛</p>
-              <p style={{ color: 'var(--color-gray-400)', fontSize: '1rem' }}>No products found with selected filters</p>
+            <div className="col-[1/-1] text-center py-20">
+              <p className="text-5xl mb-4">♛</p>
+              <p className="text-gray-400 text-base">No products found with selected filters</p>
               <button onClick={() => { setSelectedCategory('All'); setSelectedCollection('All'); setPriceRange('All'); }}
-                className="btn-outline" style={{ marginTop: 20 }}>
+                className="btn-outline mt-5">
                 Clear Filters
               </button>
             </div>
@@ -184,36 +153,19 @@ export default function ShopPage() {
 
       {/* Mobile Filter Drawer */}
       {mobileFilterOpen && (
-        <div style={{
-          position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(10,10,10,0.95)',
-          padding: '80px 24px 24px', overflowY: 'auto', animation: 'fadeIn 0.2s ease-out',
-        }}>
-          <button onClick={() => setMobileFilterOpen(false)} style={{
-            position: 'absolute', top: 24, right: 24, background: 'none',
-            border: 'none', color: 'var(--color-white)', fontSize: '1.5rem', cursor: 'pointer',
-          }}>
+        <div className="fixed inset-0 z-[2000] bg-black/95 pt-20 px-6 pb-6 overflow-y-auto animate-fade-in block md:hidden">
+          <button onClick={() => setMobileFilterOpen(false)} className="absolute top-6 right-6 bg-none border-none text-white text-2xl cursor-pointer">
             ✕
           </button>
           <FilterSidebar />
-          <button onClick={() => setMobileFilterOpen(false)} className="btn-gold"
-            style={{ width: '100%', marginTop: 32, padding: '14px' }}>
+          <button onClick={() => setMobileFilterOpen(false)} className="btn-gold w-full mt-8 py-3.5">
             Apply Filters ({filtered.length} items)
           </button>
         </div>
       )}
 
       <style jsx global>{`
-        @media (max-width: 768px) {
-          .filter-sidebar { display: none !important; }
-          .filter-btn-mobile { display: block !important; }
-          div[style*="gridTemplateColumns: '240px 1fr'"],
-          div[style*="grid-template-columns"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        .card-hover:hover .quick-buy-overlay {
-          transform: translateY(0) !important;
-        }
+        /* Removed as Tailwind md: modifiers replace this css */
       `}</style>
     </div>
   );

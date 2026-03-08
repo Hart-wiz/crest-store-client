@@ -22,38 +22,34 @@ export default function AdminOrders() {
   return (
     <div>
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, marginBottom: 4 }}>
+      <div className="mb-6">
+        <h1 className="font-heading text-2xl font-bold mb-1">
           Orders
         </h1>
-        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.85rem' }}>
+        <p className="text-gray-400 text-[0.85rem]">
           Manage and track all customer orders
         </p>
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
+      <div className="flex gap-3 mb-6 flex-wrap">
         <input
           type="text"
           placeholder="Search orders..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="admin-input"
-          style={{ maxWidth: 280, flex: 1 }}
+          className="admin-input flex-1 max-w-[280px]"
         />
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+        <div className="flex gap-1.5 flex-wrap">
           {['all', ...statusOptions].map(s => (
             <button
               key={s}
               onClick={() => setFilterStatus(s)}
-              style={{
-                padding: '8px 16px', fontSize: '0.78rem',
-                background: filterStatus === s ? 'rgba(212,175,55,0.1)' : 'rgba(255,255,255,0.03)',
-                border: filterStatus === s ? '1px solid var(--color-gold)' : '1px solid var(--color-gray-800)',
-                color: filterStatus === s ? 'var(--color-gold)' : 'var(--color-gray-400)',
-                cursor: 'pointer', borderRadius: 6, fontWeight: filterStatus === s ? 600 : 400,
-                fontFamily: 'var(--font-body)', textTransform: 'capitalize',
-              }}
+              className={`py-2 px-4 text-[0.78rem] cursor-pointer rounded-md font-body capitalize transition-colors ${
+                filterStatus === s
+                  ? 'bg-gold/10 border border-gold text-gold font-semibold'
+                  : 'bg-white/[0.03] border border-gray-800 text-gray-400 font-normal hover:bg-white/[0.06]'
+              }`}
             >
               {s === 'all' ? 'All' : statusLabels[s]}
             </button>
@@ -62,8 +58,8 @@ export default function AdminOrders() {
       </div>
 
       {/* Orders Table */}
-      <div className="admin-card" style={{ overflow: 'auto' }}>
-        <table className="admin-table">
+      <div className="admin-card overflow-x-auto">
+        <table className="admin-table w-full min-w-[800px]">
           <thead>
             <tr>
               <th>Order</th>
@@ -80,50 +76,44 @@ export default function AdminOrders() {
             {filtered.map(order => (
               <tr key={order.id}>
                 <td>
-                  <span style={{ fontWeight: 600, color: 'var(--color-gold)', fontSize: '0.8rem' }}>{order.refNumber}</span>
+                  <span className="font-semibold text-gold text-[0.8rem]">{order.refNumber}</span>
                 </td>
                 <td>
                   <div>
-                    <p style={{ fontWeight: 500, fontSize: '0.85rem' }}>{order.customerName}</p>
-                    <p style={{ color: 'var(--color-gray-500)', fontSize: '0.7rem' }}>{order.phone}</p>
+                    <p className="font-medium text-[0.85rem]">{order.customerName}</p>
+                    <p className="text-gray-500 text-[0.7rem]">{order.phone}</p>
                   </div>
                 </td>
-                <td style={{ color: 'var(--color-gray-400)', fontSize: '0.8rem' }}>
+                <td className="text-gray-400 text-[0.8rem]">
                   {order.items.length} item{order.items.length > 1 ? 's' : ''}
                 </td>
-                <td style={{ fontWeight: 600 }}>{formatPrice(order.total)}</td>
+                <td className="font-semibold">{formatPrice(order.total)}</td>
                 <td>
-                  <span style={{
-                    padding: '3px 10px', borderRadius: 12, fontSize: '0.7rem', fontWeight: 600,
-                    background: order.paymentStatus === 'completed' ? 'rgba(56,161,105,0.15)' : 'rgba(214,158,46,0.15)',
-                    color: order.paymentStatus === 'completed' ? '#68D391' : '#D69E2E',
-                  }}>
+                  <span className={`py-[3px] px-2.5 rounded-xl text-[0.7rem] font-semibold ${
+                    order.paymentStatus === 'completed'
+                      ? 'bg-[#38A169]/15 text-[#68D391]'
+                      : 'bg-[#D69E2E]/15 text-[#D69E2E]'
+                  }`}>
                     {order.paymentStatus}
                   </span>
                 </td>
                 <td>
                   <select
                     defaultValue={order.status}
-                    className="admin-input"
-                    style={{ padding: '6px 30px 6px 10px', fontSize: '0.75rem', width: 'auto', minWidth: 110 }}
+                    className="admin-input py-1.5 pl-2.5 pr-8 text-[0.75rem] w-auto min-w-[110px]"
                   >
                     {statusOptions.map(s => (
                       <option key={s} value={s}>{statusLabels[s]}</option>
                     ))}
                   </select>
                 </td>
-                <td style={{ color: 'var(--color-gray-400)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                <td className="text-gray-400 text-[0.8rem] whitespace-nowrap">
                   {order.createdAt}
                 </td>
                 <td>
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    style={{
-                      padding: '6px 14px', background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid var(--color-gray-700)', color: 'var(--color-gray-300)',
-                      cursor: 'pointer', fontSize: '0.75rem', borderRadius: 6,
-                      fontFamily: 'var(--font-body)',
-                    }}
+                    className="py-1.5 px-3.5 bg-white/5 border border-gray-700 text-gray-300 cursor-pointer text-[0.75rem] rounded-md transition-colors hover:bg-white/10 font-body"
                   >
                     View
                   </button>
@@ -136,26 +126,16 @@ export default function AdminOrders() {
 
       {/* Order Detail Drawer */}
       {selectedOrder && (
-        <div style={{
-          position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(0,0,0,0.6)',
-          display: 'flex', justifyContent: 'flex-end',
-        }} onClick={() => setSelectedOrder(null)}>
-          <div style={{
-            width: 440, maxWidth: '100%', height: '100vh', overflowY: 'auto',
-            background: 'var(--color-black-lighter)', borderLeft: '1px solid var(--color-gray-800)',
-            padding: 32, animation: 'slideInRight 0.3s ease-out',
-          }} onClick={e => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 700 }}>
+        <div className="fixed inset-0 z-[2000] bg-black/60 flex justify-end" onClick={() => setSelectedOrder(null)}>
+          <div className="w-[440px] max-w-full h-screen overflow-y-auto bg-black-lighter border-l border-gray-800 p-8 animate-[slideInRight_0.3s_ease-out]" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-7">
+              <h2 className="font-heading text-xl font-bold">
                 Order Details
               </h2>
-              <button onClick={() => setSelectedOrder(null)} style={{
-                background: 'none', border: 'none', color: 'var(--color-gray-400)',
-                fontSize: '1.25rem', cursor: 'pointer',
-              }}>✕</button>
+              <button onClick={() => setSelectedOrder(null)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white">✕</button>
             </div>
 
-            <div style={{ marginBottom: 24 }}>
+            <div className="mb-6">
               <span className={`status-badge status-${selectedOrder.status}`}>{statusLabels[selectedOrder.status]}</span>
             </div>
 
@@ -167,46 +147,38 @@ export default function AdminOrders() {
               { label: 'Address', value: `${selectedOrder.address}, ${selectedOrder.city}, ${selectedOrder.state}` },
               { label: 'Date', value: selectedOrder.createdAt },
             ].map(item => (
-              <div key={item.label} style={{
-                display: 'flex', justifyContent: 'space-between', padding: '10px 0',
-                borderBottom: '1px solid rgba(255,255,255,0.04)',
-              }}>
-                <span style={{ color: 'var(--color-gray-400)', fontSize: '0.85rem' }}>{item.label}</span>
-                <span style={{ fontSize: '0.85rem', textAlign: 'right', maxWidth: '60%' }}>{item.value}</span>
+              <div key={item.label} className="flex justify-between py-2.5 border-b border-white/5">
+                <span className="text-gray-400 text-[0.85rem]">{item.label}</span>
+                <span className="text-[0.85rem] text-right max-w-[60%]">{item.value}</span>
               </div>
             ))}
 
-            <h3 style={{ fontSize: '0.85rem', fontWeight: 600, marginTop: 24, marginBottom: 12, color: 'var(--color-gold)' }}>
+            <h3 className="text-[0.85rem] font-semibold mt-6 mb-3 text-gold">
               Order Items
             </h3>
             {selectedOrder.items.map((item, i) => (
-              <div key={i} style={{
-                padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, marginBottom: 8,
-              }}>
-                <p style={{ fontWeight: 500, fontSize: '0.85rem', marginBottom: 4 }}>{item.productName}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-gray-400)', fontSize: '0.8rem' }}>
+              <div key={i} className="p-3 bg-white/[0.02] rounded-lg mb-2">
+                <p className="font-medium text-[0.85rem] mb-1">{item.productName}</p>
+                <div className="flex justify-between text-gray-400 text-[0.8rem]">
                   <span>Size: {item.size} • Color: {item.color} • Qty: {item.quantity}</span>
-                  <span style={{ color: 'var(--color-gold)', fontWeight: 600 }}>{formatPrice(item.price)}</span>
+                  <span className="text-gold font-semibold">{formatPrice(item.price)}</span>
                 </div>
               </div>
             ))}
 
-            <div style={{
-              display: 'flex', justifyContent: 'space-between', marginTop: 16, padding: '16px 0',
-              borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: '1.1rem', fontWeight: 700,
-            }}>
+            <div className="flex justify-between mt-4 py-4 border-t border-white/[0.06] text-[1.1rem] font-bold">
               <span>Total</span>
               <span className="gold-text">{formatPrice(selectedOrder.total)}</span>
             </div>
 
-            <div style={{ marginTop: 24 }}>
-              <label style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-gray-400)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div className="mt-6">
+              <label className="block text-[0.75rem] text-gray-400 mb-2 font-semibold text-transform: uppercase tracking-[0.08em]">
                 Update Status
               </label>
               <select className="admin-input" defaultValue={selectedOrder.status}>
                 {statusOptions.map(s => <option key={s} value={s}>{statusLabels[s]}</option>)}
               </select>
-              <button className="btn-gold" style={{ width: '100%', marginTop: 12, padding: '12px' }}>
+              <button className="btn-gold w-full mt-3 py-3">
                 Update Status
               </button>
             </div>

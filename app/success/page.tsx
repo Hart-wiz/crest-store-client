@@ -9,31 +9,23 @@ export default function SuccessPage() {
   const suggested = products.slice(0, 3);
 
   return (
-    <div style={{ paddingTop: 100, minHeight: '100vh' }}>
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '60px 24px 80px', textAlign: 'center' }}>
+    <div className="pt-[100px] min-h-screen">
+      <div className="max-w-[640px] mx-auto py-[60px] px-6 pb-[80px] text-center">
         {/* Success Icon */}
-        <div style={{
-          width: 88, height: 88, borderRadius: '50%', margin: '0 auto 32px',
-          background: 'linear-gradient(135deg, var(--color-gold-dark), var(--color-gold))',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          animation: 'pulse-gold 2s infinite',
-        }}>
-          <span style={{ fontSize: '2.5rem', color: 'var(--color-black)' }}>✓</span>
+        <div className="w-[88px] h-[88px] rounded-full mx-auto mb-8 bg-gradient-to-br from-gold-dark to-gold flex items-center justify-center animate-pulse-gold">
+          <span className="text-[2.5rem] text-black">✓</span>
         </div>
 
-        <h1 style={{
-          fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
-          fontWeight: 700, marginBottom: 12,
-        }}>
+        <h1 className="font-heading text-[clamp(1.5rem,4vw,2.25rem)] font-bold mb-3">
           Thank You for Your <span className="gold-text">Order</span>!
         </h1>
-        <p style={{ color: 'var(--color-gray-300)', fontSize: '1rem', marginBottom: 40, lineHeight: 1.7 }}>
+        <p className="text-gray-300 text-base mb-10 leading-[1.7]">
           Your payment has been processed successfully. You will receive a confirmation via email and SMS shortly.
         </p>
 
         {/* Order Details */}
-        <div className="glass" style={{ padding: 32, borderRadius: 12, textAlign: 'left', marginBottom: 32 }}>
-          <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20 }}>
+        <div className="glass p-8 rounded-xl text-left mb-8">
+          <h3 className="text-[0.85rem] font-bold text-gold tracking-[0.1em] uppercase mb-5">
             Order Details
           </h3>
           {[
@@ -42,18 +34,11 @@ export default function SuccessPage() {
             { label: 'Estimated Delivery', value: '3-5 Business Days' },
             { label: 'Payment', value: 'Completed ✓' },
           ].map(item => (
-            <div key={item.label} style={{
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '14px 0', borderBottom: '1px solid rgba(255,255,255,0.04)',
-            }}>
-              <span style={{ color: 'var(--color-gray-400)', fontSize: '0.85rem' }}>{item.label}</span>
-              <span style={{
-                fontWeight: item.highlight ? 700 : 500,
-                fontSize: item.highlight ? '1rem' : '0.85rem',
-                color: item.highlight ? 'var(--color-gold)' : 'var(--color-white)',
-                fontFamily: item.highlight ? 'var(--font-body)' : 'inherit',
-                letterSpacing: item.highlight ? '0.05em' : 'normal',
-              }}>
+            <div key={item.label} className="flex justify-between items-center py-3.5 border-b border-white/5">
+              <span className="text-gray-400 text-[0.85rem]">{item.label}</span>
+              <span className={`${
+                item.highlight ? 'font-bold text-base text-gold font-body tracking-[0.05em]' : 'font-medium text-[0.85rem] text-white'
+              }`}>
                 {item.value}
               </span>
             </div>
@@ -61,39 +46,35 @@ export default function SuccessPage() {
         </div>
 
         {/* Actions */}
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 48 }}>
-          <Link href="/track" className="btn-gold" style={{ textDecoration: 'none', padding: '14px 28px' }}>
+        <div className="flex gap-3 flex-wrap justify-center mb-12">
+          <Link href="/track" className="btn-gold no-underline py-3.5 px-7">
             Track Your Order
           </Link>
           <a
             href="https://wa.me/2348012345678"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline"
-            style={{ textDecoration: 'none', padding: '12px 28px' }}
+            className="btn-outline no-underline py-3 px-7"
           >
             💬 Contact Support
           </a>
         </div>
 
         {/* Suggested Products */}
-        <div style={{ textAlign: 'left' }}>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', marginBottom: 20 }}>
+        <div className="text-left">
+          <h2 className="font-heading text-xl mb-5">
             You Might Also Like
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16 }}>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4">
             {suggested.map(p => (
-              <Link href={`/product/${p.id}`} key={p.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="card-hover" style={{
-                  background: 'var(--color-black-lighter)', border: '1px solid rgba(255,255,255,0.06)',
-                  overflow: 'hidden',
-                }}>
-                  <div style={{ position: 'relative', paddingTop: '100%', overflow: 'hidden' }}>
-                    <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} />
+              <Link href={`/product/${p.id}`} key={p.id} className="no-underline text-inherit block">
+                <div className="card-hover bg-black-lighter border border-white/5 overflow-hidden">
+                  <div className="relative pt-[100%] overflow-hidden">
+                    <Image src={p.images[0]} alt={p.name} fill className="object-cover" />
                   </div>
-                  <div style={{ padding: 12 }}>
-                    <p style={{ fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}>{p.name}</p>
-                    <span style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '0.85rem' }}>{formatPrice(p.price)}</span>
+                  <div className="p-3">
+                    <p className="text-[0.8rem] font-semibold mb-1">{p.name}</p>
+                    <span className="text-gold font-bold text-[0.85rem]">{formatPrice(p.price)}</span>
                   </div>
                 </div>
               </Link>
