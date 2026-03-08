@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Wallet, Package, Tag, Users } from 'lucide-react';
 import { orders, products, customers, getTotalRevenue, formatPrice, getRevenueByMonth } from '../data/store';
 
 export default function AdminDashboard() {
@@ -10,10 +11,10 @@ export default function AdminDashboard() {
   const recentOrders = [...orders].reverse().slice(0, 5);
 
   const stats = [
-    { label: 'Total Revenue', value: formatPrice(totalRevenue), icon: '💰', change: '+12.5%', positive: true },
-    { label: 'Total Orders', value: orders.length.toString(), icon: '📦', change: '+8.3%', positive: true },
-    { label: 'Products', value: products.length.toString(), icon: '🏷️', change: '+2', positive: true },
-    { label: 'Customers', value: customers.length.toString(), icon: '👥', change: '+15.2%', positive: true },
+    { label: 'Total Revenue', value: formatPrice(totalRevenue), icon: <Wallet className="w-6 h-6" />, change: '+12.5%', positive: true },
+    { label: 'Total Orders', value: orders.length.toString(), icon: <Package className="w-6 h-6" />, change: '+8.3%', positive: true },
+    { label: 'Products', value: products.length.toString(), icon: <Tag className="w-6 h-6" />, change: '+2', positive: true },
+    { label: 'Customers', value: customers.length.toString(), icon: <Users className="w-6 h-6" />, change: '+15.2%', positive: true },
   ];
 
   return (

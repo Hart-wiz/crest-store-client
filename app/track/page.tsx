@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Search } from 'lucide-react';
 import { orders } from '../data/store';
 
 const statusSteps = ['pending', 'paid', 'processing', 'shipped', 'delivered'] as const;
@@ -150,7 +151,9 @@ export default function TrackPage() {
 
         {notFound && searched && (
           <div className="animate-fade-in text-center py-12">
-            <p className="text-[2.5rem] mb-4">🔍</p>
+            <div className="flex justify-center mb-4 text-gold">
+              <Search size={40} />
+            </div>
             <h3 className="font-heading text-xl mb-2">Order Not Found</h3>
             <p className="text-gray-400 text-[0.9rem] mb-6">
               Please check your reference number or phone number and try again.

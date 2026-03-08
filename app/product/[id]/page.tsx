@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { CheckCircle2, Truck, MessageCircle, Lock, Crown } from 'lucide-react';
 import { products, formatPrice } from '../../data/store';
 
 export default function ProductPage() {
@@ -16,7 +17,9 @@ export default function ProductPage() {
   if (!product) {
     return (
       <div className="pt-[140px] text-center min-h-[60vh]">
-        <p className="text-5xl mb-4">♛</p>
+        <div className="flex justify-center mb-4 text-gold">
+          <Crown size={48} />
+        </div>
         <h1 className="font-heading text-2xl mb-3">Product Not Found</h1>
         <Link href="/shop" className="btn-outline no-underline">Back to Shop</Link>
       </div>
@@ -155,13 +158,13 @@ export default function ProductPage() {
           {/* Details */}
           <div className="mt-10 border-t border-white/5 pt-6">
             {[
-              { label: '✅ Premium Quality Materials' },
-              { label: '🚚 Fast Delivery (2-5 Days)' },
-              { label: '💬 WhatsApp Support' },
-              { label: '🔒 Secure Checkout' },
+              { icon: <CheckCircle2 className="w-4 h-4 text-[#68D391]" />, text: 'Premium Quality Materials' },
+              { icon: <Truck className="w-4 h-4 text-gold" />, text: 'Fast Delivery (2-5 Days)' },
+              { icon: <MessageCircle className="w-4 h-4 text-[#63B3ED]" />, text: 'WhatsApp Support' },
+              { icon: <Lock className="w-4 h-4 text-gray-300" />, text: 'Secure Checkout' },
             ].map((item, i) => (
-              <p key={i} className="text-gray-400 text-[0.85rem] mb-2.5">
-                {item.label}
+              <p key={i} className="text-gray-400 text-[0.85rem] mb-2.5 flex items-center gap-2">
+                {item.icon} {item.text}
               </p>
             ))}
           </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { X } from 'lucide-react';
 import { orders, formatPrice } from '../../data/store';
 
 const statusOptions = ['pending', 'paid', 'processing', 'shipped', 'delivered'] as const;
@@ -132,7 +133,7 @@ export default function AdminOrders() {
               <h2 className="font-heading text-xl font-bold">
                 Order Details
               </h2>
-              <button onClick={() => setSelectedOrder(null)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white">✕</button>
+              <button onClick={() => setSelectedOrder(null)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white"><X size={20} /></button>
             </div>
 
             <div className="mb-6">

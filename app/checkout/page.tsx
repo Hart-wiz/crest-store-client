@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Lock } from 'lucide-react';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -142,8 +143,8 @@ export default function CheckoutPage() {
               </div>
 
               <div className="mt-6 p-4 bg-[rgba(212,175,55,0.05)] rounded-lg border border-[rgba(212,175,55,0.1)]">
-                <p className="text-xs text-gray-400 leading-[1.6]">
-                  🔒 Your payment information is encrypted and secure. We never store your card details.
+                <p className="text-xs text-gray-400 leading-[1.6] flex items-start gap-2">
+                  <Lock className="w-4 h-4 shrink-0 text-gray-300 mt-0.5" /> Your payment information is encrypted and secure. We never store your card details.
                 </p>
               </div>
             </div>

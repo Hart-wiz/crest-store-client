@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { Star } from 'lucide-react';
 import { products, formatPrice, categories } from './data/store';
 
 export default function HomePage() {
@@ -192,7 +193,7 @@ export default function HomePage() {
             <div key={i} className="glass card-hover p-8 rounded-xl opacity-0" style={{ animation: `fadeInUp 0.6s ease-out ${i * 0.15}s forwards` }}>
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: review.rating }).map((_, j) => (
-                  <span key={j} className="text-gold text-base">★</span>
+                  <Star key={j} className="text-gold w-4 h-4 fill-gold" />
                 ))}
               </div>
               <p className="text-gray-300 text-[0.9rem] leading-[1.7] mb-5 italic">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { X } from 'lucide-react';
 import { products, formatPrice, categories, collections, Product } from '../../data/store';
 
 export default function AdminProducts() {
@@ -122,7 +123,7 @@ export default function AdminProducts() {
               <h2 className="font-heading text-xl font-bold">
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h2>
-              <button onClick={() => setShowModal(false)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white">✕</button>
+              <button onClick={() => setShowModal(false)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white"><X size={20} /></button>
             </div>
 
             <div className="flex flex-col gap-4">

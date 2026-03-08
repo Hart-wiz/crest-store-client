@@ -1,15 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { Store, CreditCard, Truck, UserCircle, CheckCircle2 } from 'lucide-react';
 
 export default function AdminSettings() {
   const [activeTab, setActiveTab] = useState('store');
 
   const tabs = [
-    { id: 'store', label: 'Store Info', icon: '🏪' },
-    { id: 'payment', label: 'Payment', icon: '💳' },
-    { id: 'delivery', label: 'Delivery', icon: '🚚' },
-    { id: 'account', label: 'Admin Account', icon: '👤' },
+    { id: 'store', label: 'Store Info', icon: <Store className="w-4 h-4" /> },
+    { id: 'payment', label: 'Payment', icon: <CreditCard className="w-4 h-4" /> },
+    { id: 'delivery', label: 'Delivery', icon: <Truck className="w-4 h-4" /> },
+    { id: 'account', label: 'Admin Account', icon: <UserCircle className="w-4 h-4" /> },
   ];
 
   return (
@@ -128,8 +129,8 @@ export default function AdminSettings() {
               </select>
             </div>
             <div className="p-4 bg-[#38A169]/10 rounded-lg border border-[#38A169]/20 mt-2">
-              <p className="text-[#68D391] text-[0.85rem] font-semibold">
-                ✅ Payment gateway is connected and active
+              <p className="text-[#68D391] text-[0.85rem] font-semibold flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4" /> Payment gateway is connected and active
               </p>
             </div>
             <button className="btn-gold self-start py-3 px-8 mt-2">

@@ -3,14 +3,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { LayoutDashboard, Tag, Package, Users, LineChart, Settings, Menu } from 'lucide-react';
 
 const navItems = [
-  { label: 'Dashboard', href: '/admin', icon: '📊' },
-  { label: 'Products', href: '/admin/products', icon: '🏷️' },
-  { label: 'Orders', href: '/admin/orders', icon: '📦' },
-  { label: 'Customers', href: '/admin/customers', icon: '👥' },
-  { label: 'Analytics', href: '/admin/analytics', icon: '📈' },
-  { label: 'Settings', href: '/admin/settings', icon: '⚙️' },
+  { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard className="w-5 h-5" /> },
+  { label: 'Products', href: '/admin/products', icon: <Tag className="w-5 h-5" /> },
+  { label: 'Orders', href: '/admin/orders', icon: <Package className="w-5 h-5" /> },
+  { label: 'Customers', href: '/admin/customers', icon: <Users className="w-5 h-5" /> },
+  { label: 'Analytics', href: '/admin/analytics', icon: <LineChart className="w-5 h-5" /> },
+  { label: 'Settings', href: '/admin/settings', icon: <Settings className="w-5 h-5" /> },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -87,7 +88,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="md:hidden block bg-transparent border-none text-white text-xl cursor-pointer"
           >
-            ☰
+            <Menu className="w-6 h-6" />
           </button>
           <div>
             <h2 className="text-base font-semibold">

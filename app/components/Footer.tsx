@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -91,17 +92,17 @@ export default function Footer() {
         {/* Contact */}
         <div>
           <h4 className="text-xs uppercase tracking-[0.12em] text-gold mb-5 font-bold">Contact</h4>
-          <p className="text-gray-400 text-[0.85rem] mb-3">
-            📧 hello@crest.store
+          <p className="text-gray-400 text-[0.85rem] mb-3 flex items-center gap-2">
+            <Mail className="w-4 h-4" /> hello@crest.store
           </p>
-          <p className="text-gray-400 text-[0.85rem] mb-3">
-            📱 +234 801 234 5678
+          <p className="text-gray-400 text-[0.85rem] mb-3 flex items-center gap-2">
+            <Phone className="w-4 h-4" /> +234 801 234 5678
           </p>
-          <p className="text-gray-400 text-[0.85rem] mb-3">
-            💬 WhatsApp Support
+          <p className="text-gray-400 text-[0.85rem] mb-3 flex items-center gap-2">
+            <MessageCircle className="w-4 h-4" /> WhatsApp Support
           </p>
-          <p className="text-gray-400 text-[0.85rem]">
-            📍 Lagos, Nigeria
+          <p className="text-gray-400 text-[0.85rem] flex items-center gap-2">
+            <MapPin className="w-4 h-4" /> Lagos, Nigeria
           </p>
         </div>
       </div>
