@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { ChevronRight, Crown, Star } from 'lucide-react';
 import { products, formatPrice, categories } from './data/store';
 
 export default function HomePage() {
@@ -57,7 +58,7 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
           {featured.map((product, i) => (
-            <Link href={`/product/${product.id}`} key={product.id} className="no-underline text-inherit block">
+            <Link href={product.isExclusive ? `/verify/${product.id}` : `/product/${product.id}`} key={product.id} className="no-underline text-inherit block">
               <div className="card-hover bg-black-lighter border border-white/5 overflow-hidden relative opacity-0 group"
                 style={{ animation: `fadeInUp 0.6s ease-out ${i * 0.1}s forwards` }}
               >
@@ -102,7 +103,7 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
             {exclusives.map((product, i) => (
-              <Link href={`/product/${product.id}`} key={product.id} className="no-underline text-inherit block">
+              <Link href={`/verify/${product.id}`} key={product.id} className="no-underline text-inherit block">
                 <div className="card-hover bg-gradient-to-br from-[rgba(212,175,55,0.06)] to-black/80 border border-[rgba(212,175,55,0.15)] overflow-hidden relative group">
                   <span className="badge-exclusive animate-pulse-gold">Exclusive</span>
                   <div className="relative pt-[100%] overflow-hidden">
@@ -141,8 +142,8 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20 to-[60%] flex items-end p-6">
                     <div>
                       <h3 className="font-heading text-[1.25rem] font-bold mb-1">{cat}</h3>
-                      <span className="text-gold text-xs font-semibold tracking-[0.1em] uppercase">
-                        Shop Now →
+                      <span className="text-gold text-xs font-semibold tracking-[0.1em] uppercase flex items-center gap-1">
+                        Shop Now <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
@@ -167,7 +168,7 @@ export default function HomePage() {
               <div key={i} className="relative pt-[100%] overflow-hidden cursor-pointer group">
                 <Image src={img} alt={`Gallery ${i + 1}`} fill className="object-cover transition-all duration-400 group-hover:scale-105 group-hover:brightness-120" />
                 <div className="absolute inset-0 bg-[rgba(212,175,55,0.15)] flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="text-2xl">♛</span>
+                  <Crown className="w-8 h-8 text-gold" />
                 </div>
               </div>
             ))}
@@ -190,9 +191,9 @@ export default function HomePage() {
             { name: 'Tunde M.', text: 'Fast delivery, premium packaging, and the tee fits perfectly. This brand understands what Nigerian streetwear should look like. 10/10.', rating: 5 },
           ].map((review, i) => (
             <div key={i} className="glass card-hover p-8 rounded-xl opacity-0" style={{ animation: `fadeInUp 0.6s ease-out ${i * 0.15}s forwards` }}>
-              <div className="flex gap-0.5 mb-4">
+              <div className="flex gap-1 mb-4">
                 {Array.from({ length: review.rating }).map((_, j) => (
-                  <span key={j} className="text-gold text-base">★</span>
+                  <Star key={j} className="w-4 h-4 text-gold fill-gold" />
                 ))}
               </div>
               <p className="text-gray-300 text-[0.9rem] leading-[1.7] mb-5 italic">

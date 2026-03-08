@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Eye, X, Search, ChevronRight } from 'lucide-react';
 import { orders, formatPrice } from '../../data/store';
 
 const statusOptions = ['pending', 'paid', 'processing', 'shipped', 'delivered'] as const;
@@ -33,13 +34,16 @@ export default function AdminOrders() {
 
       {/* Filters */}
       <div className="flex gap-3 mb-6 flex-wrap">
-        <input
-          type="text"
-          placeholder="Search orders..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="admin-input flex-1 max-w-[280px]"
-        />
+        <div className="relative flex-1 max-w-[280px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <input
+            type="text"
+            placeholder="Search orders..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="admin-input pl-10"
+          />
+        </div>
         <div className="flex gap-1.5 flex-wrap">
           {['all', ...statusOptions].map(s => (
             <button
@@ -113,9 +117,10 @@ export default function AdminOrders() {
                 <td>
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    className="py-1.5 px-3.5 bg-white/5 border border-gray-700 text-gray-300 cursor-pointer text-[0.75rem] rounded-md transition-colors hover:bg-white/10 font-body"
+                    className="p-2 bg-white/5 border border-gray-700 text-gray-300 cursor-pointer rounded-md transition-colors hover:bg-white/10"
+                    title="View Details"
                   >
-                    View
+                    <Eye className="w-3.5 h-3.5" />
                   </button>
                 </td>
               </tr>
@@ -132,7 +137,9 @@ export default function AdminOrders() {
               <h2 className="font-heading text-xl font-bold">
                 Order Details
               </h2>
-              <button onClick={() => setSelectedOrder(null)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white">✕</button>
+              <button onClick={() => setSelectedOrder(null)} className="bg-transparent border-none text-gray-400 cursor-pointer hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
             <div className="mb-6">

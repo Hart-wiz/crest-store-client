@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Filter, SearchX, X } from 'lucide-react';
 import { products, formatPrice, categories, collections } from '../data/store';
 
 export default function ShopPage() {
@@ -86,9 +87,9 @@ export default function ShopPage() {
       <div className="max-w-[1280px] mx-auto py-4 px-6 md:hidden">
         <button
           onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-          className="py-2.5 px-5 bg-transparent border border-gray-700 text-gray-300 cursor-pointer text-[0.85rem] font-body block"
+          className="py-2.5 px-5 bg-transparent border border-gray-700 text-gray-300 cursor-pointer text-[0.85rem] font-body flex items-center gap-2"
         >
-          ☰ Filters
+          <Filter className="w-4 h-4" /> Filters
         </button>
       </div>
 
@@ -102,7 +103,7 @@ export default function ShopPage() {
         {/* Product Grid */}
         <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5 content-start">
           {filtered.map((product, i) => (
-            <Link href={`/product/${product.id}`} key={product.id} className="no-underline text-inherit block">
+            <Link href={product.isExclusive ? `/verify/${product.id}` : `/product/${product.id}`} key={product.id} className="no-underline text-inherit block">
               <div className="card-hover bg-black-lighter border border-white/5 overflow-hidden relative opacity-0 group"
                 style={{ animation: `fadeInUp 0.5s ease-out ${i * 0.05}s forwards` }}
               >
@@ -139,8 +140,8 @@ export default function ShopPage() {
             </Link>
           ))}
           {filtered.length === 0 && (
-            <div className="col-[1/-1] text-center py-20">
-              <p className="text-5xl mb-4">♛</p>
+            <div className="col-[1/-1] text-center py-20 flex flex-col items-center">
+              <SearchX className="w-16 h-16 text-gray-600/50 mb-4" />
               <p className="text-gray-400 text-base">No products found with selected filters</p>
               <button onClick={() => { setSelectedCategory('All'); setSelectedCollection('All'); setPriceRange('All'); }}
                 className="btn-outline mt-5">
@@ -154,8 +155,8 @@ export default function ShopPage() {
       {/* Mobile Filter Drawer */}
       {mobileFilterOpen && (
         <div className="fixed inset-0 z-[2000] bg-black/95 pt-20 px-6 pb-6 overflow-y-auto animate-fade-in block md:hidden">
-          <button onClick={() => setMobileFilterOpen(false)} className="absolute top-6 right-6 bg-none border-none text-white text-2xl cursor-pointer">
-            ✕
+          <button onClick={() => setMobileFilterOpen(false)} className="absolute top-6 right-6 bg-none border-none text-white cursor-pointer hover:text-gold transition-colors">
+            <X className="w-7 h-7" />
           </button>
           <FilterSidebar />
           <button onClick={() => setMobileFilterOpen(false)} className="btn-gold w-full mt-8 py-3.5">

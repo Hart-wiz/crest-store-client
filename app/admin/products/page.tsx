@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Plus, X, Image as ImageIcon, Edit2, Trash2, Search } from 'lucide-react';
 import { products, formatPrice, categories, collections, Product } from '../../data/store';
 
 export default function AdminProducts() {
@@ -29,20 +30,23 @@ export default function AdminProducts() {
             {productList.length} total products
           </p>
         </div>
-        <button onClick={openAdd} className="btn-gold py-2.5 px-6 text-[0.8rem]">
-          + Add Product
+        <button onClick={openAdd} className="btn-gold py-2.5 px-6 text-[0.8rem] flex items-center gap-2">
+          <Plus className="w-4 h-4" /> Add Product
         </button>
       </div>
 
       {/* Search */}
       <div className="mb-6">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="admin-input max-w-[400px]"
-        />
+        <div className="relative max-w-[400px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="admin-input pl-10"
+          />
+        </div>
       </div>
 
       {/* Products Table */}
@@ -100,11 +104,11 @@ export default function AdminProducts() {
                 </td>
                 <td>
                   <div className="flex gap-2">
-                    <button onClick={() => openEdit(p)} className="py-1.5 px-3.5 bg-white/5 border border-gray-700 text-gray-300 cursor-pointer text-[0.75rem] rounded-md transition-colors hover:bg-white/10 font-body">
-                      Edit
+                    <button onClick={() => openEdit(p)} className="p-2 bg-white/5 border border-gray-700 text-gray-300 cursor-pointer rounded-md transition-colors hover:bg-white/10 hover:text-[#4FD1C5]" title="Edit">
+                      <Edit2 className="w-3.5 h-3.5" />
                     </button>
-                    <button className="py-1.5 px-3.5 bg-[#E53E3E]/10 border border-[#E53E3E]/20 text-[#FC8181] cursor-pointer text-[0.75rem] rounded-md hover:bg-[#E53E3E]/20 transition-colors font-body">
-                      Delete
+                    <button className="p-2 bg-[#E53E3E]/05 border border-[#E53E3E]/20 text-[#FC8181] cursor-pointer rounded-md hover:bg-[#E53E3E]/20 transition-colors" title="Delete">
+                      <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </td>
@@ -122,7 +126,9 @@ export default function AdminProducts() {
               <h2 className="font-heading text-xl font-bold">
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h2>
-              <button onClick={() => setShowModal(false)} className="bg-transparent border-none text-gray-400 text-xl cursor-pointer hover:text-white">✕</button>
+              <button onClick={() => setShowModal(false)} className="bg-transparent border-none text-gray-400 cursor-pointer hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -187,13 +193,16 @@ export default function AdminProducts() {
                 <label className="block text-[0.75rem] text-gray-400 mb-1.5 font-semibold text-transform: uppercase tracking-[0.08em]">
                   Product Image
                 </label>
-                <div className="border-2 border-dashed border-gray-700 rounded-lg p-8 text-center cursor-pointer bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-                  <p className="text-gray-500 text-[0.85rem]">
-                    📷 Click or drag image here to upload
-                  </p>
-                  <p className="text-gray-600 text-[0.75rem] mt-1">
-                    PNG, JPG up to 5MB
-                  </p>
+                <div className="border-2 border-dashed border-gray-700 rounded-lg p-8 text-center cursor-pointer bg-white/[0.02] hover:bg-white/[0.04] transition-colors flex flex-col items-center gap-3">
+                  <ImageIcon className="w-8 h-8 text-gray-600" />
+                  <div>
+                    <p className="text-gray-500 text-[0.85rem]">
+                      Click or drag image here to upload
+                    </p>
+                    <p className="text-gray-600 text-[0.75rem] mt-1">
+                      PNG, JPG up to 5MB
+                    </p>
+                  </div>
                 </div>
               </div>
 

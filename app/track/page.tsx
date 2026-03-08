@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Search, Check, MessageSquare } from 'lucide-react';
 import { orders } from '../data/store';
 
 const statusSteps = ['pending', 'paid', 'processing', 'shipped', 'delivered'] as const;
@@ -113,11 +114,13 @@ export default function TrackPage() {
                   {statusSteps.map((step, i) => (
                     <div key={step} className="flex flex-col items-center relative z-10 flex-1">
                       <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[0.65rem] font-bold transition-all duration-300 ${
-                        i <= currentStepIndex
-                          ? 'bg-gold text-black border-[3px] border-transparent'
-                          : 'bg-gray-800 text-gray-500 border-none'
-                      } ${i === currentStepIndex ? 'border-gold-light shadow-[0_0_15px_rgba(212,175,55,0.3)]' : ''}`}>
-                        {i < currentStepIndex ? '✓' : i + 1}
+                        i < currentStepIndex
+                          ? 'bg-[#38A169] text-white border-none'
+                          : i === currentStepIndex
+                            ? 'bg-transparent border-2 border-gold text-gold animate-pulse-gold font-bold shadow-[0_0_15px_rgba(212,175,55,0.2)]'
+                            : 'bg-gray-800 text-gray-500 border-none'
+                      }`}>
+                        {i < currentStepIndex ? <Check className="w-3.5 h-3.5" /> : i + 1}
                       </div>
                       <span className={`text-[0.65rem] mt-2 text-center ${
                         i <= currentStepIndex ? 'text-gold' : 'text-gray-600'
@@ -150,7 +153,7 @@ export default function TrackPage() {
 
         {notFound && searched && (
           <div className="animate-fade-in text-center py-12">
-            <p className="text-[2.5rem] mb-4">🔍</p>
+            <Search className="w-12 h-12 text-gray-700 mx-auto mb-4" />
             <h3 className="font-heading text-xl mb-2">Order Not Found</h3>
             <p className="text-gray-400 text-[0.9rem] mb-6">
               Please check your reference number or phone number and try again.
@@ -161,7 +164,7 @@ export default function TrackPage() {
               rel="noopener noreferrer"
               className="btn-outline no-underline"
             >
-              💬 Contact Support
+              <MessageSquare className="w-4 h-4 text-[#4FD1C5]" /> Contact Support
             </a>
           </div>
         )}

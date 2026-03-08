@@ -2,13 +2,29 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useCart } from '../context/CartContext';
+import { usePaystackPayment } from 'react-paystack';
+import { Loader2, ShieldCheck, Check } from 'lucide-react';
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { cartItems, subtotal, hasExclusiveItem, clearCart } = useCart();
+  
   const [form, setForm] = useState({
     fullName: '', email: '', phone: '', address: '', city: '', state: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Paystack configuration (using a test public key for demonstration)
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: form.email || 'customer@example.com',
+    amount: subtotal * 100, // Paystack amount is in kobo (multiply by 100)
+    publicKey: 'pk_test_d397c886e0c608bfa0c6552e424075f922fb6e49', // Test key
+  };
+
+  const initializePayment = usePaystackPayment(config);
 
   const handleChange = (field: string, value: string) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -27,10 +43,22 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const onSuccess = () => {
+    setIsProcessing(false);
+    clearCart();
+    router.push(`/success?exclusive=${hasExclusiveItem}`);
+  };
+
+  const onClose = () => {
+    setIsProcessing(false);
+    // User closed payment overlay
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      router.push('/success');
+      setIsProcessing(true);
+      initializePayment({ onSuccess, onClose });
     }
   };
 
@@ -114,8 +142,18 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <button type="submit" className="btn-gold w-full p-4 text-[0.9rem] mt-2">
-                Proceed to Payment
+              <button 
+                type="submit" 
+                disabled={isProcessing || cartItems.length === 0}
+                className="btn-gold w-full p-4 text-[0.9rem] mt-2 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" /> Processing...
+                  </>
+                ) : (
+                  'Proceed to Payment'
+                )}
               </button>
             </div>
           </form>
@@ -126,10 +164,34 @@ export default function CheckoutPage() {
               <h3 className="text-[0.85rem] font-bold tracking-[0.05em] mb-5 uppercase text-gold">
                 Order Summary
               </h3>
-              <div className="border-b border-white/5 pb-4 mb-4">
+              
+              {/* Items List */}
+              <div className="mb-6 flex flex-col gap-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin">
+                {cartItems.map((item: any) => (
+                  <div key={item.id} className="flex justify-between text-[0.85rem]">
+                    <div className="flex gap-3">
+                      <span className="text-gray-400">{item.quantity}x</span>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-white line-clamp-1">{item.product.name}</p>
+                          {item.product.isExclusive && (
+                            <span className="text-[0.6rem] text-gold font-bold uppercase tracking-tighter">
+                              Exclusive
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-500 text-[0.75rem]">Size: {item.size}</p>
+                      </div>
+                    </div>
+                    <span className="font-medium">₦{(item.price * item.quantity).toLocaleString('en-NG')}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-b border-white/5 pb-4 mb-4 border-t pt-4">
                 <div className="flex justify-between mb-2 text-[0.85rem]">
                   <span className="text-gray-400">Subtotal</span>
-                  <span>₦45,000</span>
+                  <span>₦{subtotal.toLocaleString('en-NG')}</span>
                 </div>
                 <div className="flex justify-between mb-2 text-[0.85rem]">
                   <span className="text-gray-400">Delivery</span>
@@ -138,12 +200,13 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-[1.1rem] font-bold">
                 <span>Total</span>
-                <span className="gold-text">₦45,000</span>
+                <span className="gold-text">₦{subtotal.toLocaleString('en-NG')}</span>
               </div>
 
-              <div className="mt-6 p-4 bg-[rgba(212,175,55,0.05)] rounded-lg border border-[rgba(212,175,55,0.1)]">
+              <div className="mt-6 p-4 bg-[rgba(212,175,55,0.05)] rounded-lg border border-[rgba(212,175,55,0.1)] flex gap-3">
+                <ShieldCheck className="w-5 h-5 text-gold shrink-0" />
                 <p className="text-xs text-gray-400 leading-[1.6]">
-                  🔒 Your payment information is encrypted and secure. We never store your card details.
+                  Your payment information is encrypted and secure. We never store your card details.
                 </p>
               </div>
             </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { DollarSign, Package, Tag, Users, ArrowRight } from 'lucide-react';
 import { orders, products, customers, getTotalRevenue, formatPrice, getRevenueByMonth } from '../data/store';
 
 export default function AdminDashboard() {
@@ -10,10 +11,10 @@ export default function AdminDashboard() {
   const recentOrders = [...orders].reverse().slice(0, 5);
 
   const stats = [
-    { label: 'Total Revenue', value: formatPrice(totalRevenue), icon: '💰', change: '+12.5%', positive: true },
-    { label: 'Total Orders', value: orders.length.toString(), icon: '📦', change: '+8.3%', positive: true },
-    { label: 'Products', value: products.length.toString(), icon: '🏷️', change: '+2', positive: true },
-    { label: 'Customers', value: customers.length.toString(), icon: '👥', change: '+15.2%', positive: true },
+    { label: 'Total Revenue', value: formatPrice(totalRevenue), icon: DollarSign, change: '+12.5%', positive: true, color: 'text-gold', bg: 'bg-gold/10' },
+    { label: 'Total Orders', value: orders.length.toString(), icon: Package, change: '+8.3%', positive: true, color: 'text-[#63B3ED]', bg: 'bg-[#63B3ED]/10' },
+    { label: 'Products', value: products.length.toString(), icon: Tag, change: '+2', positive: true, color: 'text-[#B794F6]', bg: 'bg-[#B794F6]/10' },
+    { label: 'Customers', value: customers.length.toString(), icon: Users, change: '+15.2%', positive: true, color: 'text-[#4FD1C5]', bg: 'bg-[#4FD1C5]/10' },
   ];
 
   return (
@@ -33,7 +34,9 @@ export default function AdminDashboard() {
         {stats.map((stat, i) => (
           <div key={i} className="admin-card opacity-0 animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: `${i * 0.1}s` }}>
             <div className="flex justify-between items-start mb-4">
-              <span className="text-2xl">{stat.icon}</span>
+              <div className={`w-10 h-10 rounded-lg ${stat.bg} flex items-center justify-center ${stat.color}`}>
+                <stat.icon className="w-5 h-5" />
+              </div>
               <span className={`text-[0.7rem] font-semibold py-[3px] px-2 rounded-xl ${
                 stat.positive ? 'bg-[#38A169]/15 text-[#68D391]' : 'bg-[#E53E3E]/15 text-[#FC8181]'
               }`}>
@@ -74,8 +77,8 @@ export default function AdminDashboard() {
         <div className="admin-card overflow-hidden">
           <div className="flex justify-between items-center mb-5">
             <h3 className="text-[0.95rem] font-semibold">Recent Orders</h3>
-            <Link href="/admin/orders" className="text-gold text-[0.8rem] no-underline hover:underline">
-              View All →
+            <Link href="/admin/orders" className="text-gold text-[0.8rem] no-underline hover:underline flex items-center gap-1">
+              View All <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
           <div>

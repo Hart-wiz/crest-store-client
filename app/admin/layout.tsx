@@ -3,14 +3,26 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { 
+  LayoutDashboard, 
+  Tag, 
+  Package, 
+  Users, 
+  BarChart3, 
+  Settings, 
+  Crown, 
+  ArrowLeft,
+  Menu,
+  X 
+} from 'lucide-react';
 
 const navItems = [
-  { label: 'Dashboard', href: '/admin', icon: '📊' },
-  { label: 'Products', href: '/admin/products', icon: '🏷️' },
-  { label: 'Orders', href: '/admin/orders', icon: '📦' },
-  { label: 'Customers', href: '/admin/customers', icon: '👥' },
-  { label: 'Analytics', href: '/admin/analytics', icon: '📈' },
-  { label: 'Settings', href: '/admin/settings', icon: '⚙️' },
+  { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, color: 'text-white' },
+  { label: 'Products', href: '/admin/products', icon: Tag, color: 'text-[#B794F6]' },
+  { label: 'Orders', href: '/admin/orders', icon: Package, color: 'text-[#63B3ED]' },
+  { label: 'Customers', href: '/admin/customers', icon: Users, color: 'text-[#4FD1C5]' },
+  { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, color: 'text-[#68D391]' },
+  { label: 'Settings', href: '/admin/settings', icon: Settings, color: 'text-gray-400' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -26,10 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="py-6 px-5 border-b border-white/5">
           <Link href="/admin" className="no-underline flex items-center gap-2.5">
-            <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-              <path d="M20 4L4 14V26L20 36L36 26V14L20 4Z" stroke="#D4AF37" strokeWidth="2.5" fill="none"/>
-              <path d="M20 8L10 14V26L20 32L30 26V14L20 8Z" stroke="#D4AF37" strokeWidth="1.5" fill="none"/>
-            </svg>
+            <Crown className="w-7 h-7 text-gold" />
             <div>
               <span className="font-heading text-[1.1rem] font-bold tracking-[0.15em] text-white">
                 CREST
@@ -56,7 +65,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     : 'text-gray-400 bg-transparent font-normal border-transparent hover:bg-white/5 hover:text-white'
                 }`}
               >
-                <span className="text-base">{item.icon}</span>
+                <item.icon className={`w-4 h-4 ${isActive ? item.color : 'text-inherit'}`} />
                 {item.label}
               </Link>
             );
@@ -66,7 +75,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Bottom */}
         <div className="py-4 px-5 border-t border-white/5">
           <Link href="/" className="no-underline text-gray-500 text-xs flex items-center gap-2 hover:text-white transition-colors">
-            ← Back to Store
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to Store
           </Link>
         </div>
       </aside>
@@ -87,7 +96,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="md:hidden block bg-transparent border-none text-white text-xl cursor-pointer"
           >
-            ☰
+            {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
           <div>
             <h2 className="text-base font-semibold">

@@ -1,5 +1,6 @@
 'use client';
 
+import { BarChart3, CreditCard, Package, RotateCcw } from 'lucide-react';
 import { products, orders, formatPrice, getRevenueByMonth, getBestSellers, getOrdersByStatus, categories } from '../../data/store';
 
 export default function AdminAnalytics() {
@@ -31,13 +32,13 @@ export default function AdminAnalytics() {
       {/* Quick Stats */}
       <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4 mb-8">
         {[
-          { label: 'Conversion Rate', value: '4.8%', icon: '📊', color: 'text-[#68D391]' },
-          { label: 'Avg. Order Value', value: formatPrice(57833), icon: '💳', color: 'text-gold' },
-          { label: 'Total Items Sold', value: '950', icon: '📦', color: 'text-[#63B3ED]' },
-          { label: 'Return Rate', value: '1.2%', icon: '↩️', color: 'text-[#FC8181]' },
+          { label: 'Conversion Rate', value: '4.8%', icon: BarChart3, color: 'text-[#68D391]' },
+          { label: 'Avg. Order Value', value: formatPrice(57833), icon: CreditCard, color: 'text-gold' },
+          { label: 'Total Items Sold', value: '950', icon: Package, color: 'text-[#63B3ED]' },
+          { label: 'Return Rate', value: '1.2%', icon: RotateCcw, color: 'text-[#FC8181]' },
         ].map((stat, i) => (
           <div key={i} className="admin-card text-center">
-            <span className="text-2xl block mb-2">{stat.icon}</span>
+            <stat.icon className={`w-6 h-6 mx-auto mb-2 opacity-90 ${stat.color}`} />
             <p className={`text-2xl font-bold mb-1 ${stat.color}`}>{stat.value}</p>
             <p className="text-gray-500 text-[0.75rem] uppercase tracking-[0.08em]">{stat.label}</p>
           </div>

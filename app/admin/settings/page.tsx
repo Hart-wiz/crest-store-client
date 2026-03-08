@@ -1,15 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { Store, CreditCard, Truck, User, CheckCircle } from 'lucide-react';
 
 export default function AdminSettings() {
   const [activeTab, setActiveTab] = useState('store');
 
   const tabs = [
-    { id: 'store', label: 'Store Info', icon: '🏪' },
-    { id: 'payment', label: 'Payment', icon: '💳' },
-    { id: 'delivery', label: 'Delivery', icon: '🚚' },
-    { id: 'account', label: 'Admin Account', icon: '👤' },
+    { id: 'store', label: 'Store Info', icon: Store, color: 'text-gold' },
+    { id: 'payment', label: 'Payment', icon: CreditCard, color: 'text-[#63B3ED]' },
+    { id: 'delivery', label: 'Delivery', icon: Truck, color: 'text-[#B794F6]' },
+    { id: 'account', label: 'Admin Account', icon: User, color: 'text-[#4FD1C5]' },
   ];
 
   return (
@@ -36,7 +37,7 @@ export default function AdminSettings() {
                 : 'text-gray-500 font-normal border-transparent hover:text-gray-300'
             }`}
           >
-            <span className="mr-2">{tab.icon}</span>
+            <tab.icon className={`w-4 h-4 mr-2 ${activeTab === tab.id ? tab.color : 'text-inherit'}`} />
             {tab.label}
           </button>
         ))}
@@ -128,8 +129,8 @@ export default function AdminSettings() {
               </select>
             </div>
             <div className="p-4 bg-[#38A169]/10 rounded-lg border border-[#38A169]/20 mt-2">
-              <p className="text-[#68D391] text-[0.85rem] font-semibold">
-                ✅ Payment gateway is connected and active
+              <p className="text-[#68D391] text-[0.85rem] font-semibold flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-[#38A169]" /> Payment gateway is connected and active
               </p>
             </div>
             <button className="btn-gold self-start py-3 px-8 mt-2">

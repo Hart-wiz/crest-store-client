@@ -2,10 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { ShoppingCart, Crown, Menu, X } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { cartItems, setCartOpen } = useCart();
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -29,12 +33,8 @@ export default function Navbar() {
       >
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="no-underline flex items-center gap-2">
-            <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
-              <path d="M20 4L4 14V26L20 36L36 26V14L20 4Z" stroke="#D4AF37" strokeWidth="2.5" fill="none"/>
-              <path d="M20 10L28 15V25L20 30L12 25V15L20 10Z" fill="#D4AF37" opacity="0.15"/>
-              <path d="M20 8L10 14V26L20 32L30 26V14L20 8Z" stroke="#D4AF37" strokeWidth="1.5" fill="none"/>
-            </svg>
+          <Link href="/" className="no-underline flex items-center gap-2 text-gold">
+            <Crown className="w-8 h-8" />
             <span className="font-heading text-2xl font-bold tracking-[0.15em] text-white">
               CREST
             </span>
@@ -55,29 +55,44 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <button 
+              onClick={() => setCartOpen(true)}
+              className="relative p-2 text-gray-300 hover:text-gold transition-colors bg-transparent border-none cursor-pointer hidden md:block"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute top-0 right-0 bg-danger text-white text-[0.6rem] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <Link href="/shop" className="btn-gold py-2.5 px-6 text-xs">
               Shop Now
             </Link>
           </div>
 
-          {/* Mobile Hamburger */}
-          <button
-            className="md:hidden bg-none border-none cursor-pointer p-2 z-[1100] nav-mobile-btn flex items-center"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            <div className={`w-6 flex flex-col relative ${mobileOpen ? 'gap-0' : 'gap-[5px]'}`}>
-              <span className={`block h-[2px] bg-gold rounded transition-all duration-300 ${
-                mobileOpen ? 'absolute top-1/2 rotate-45 w-full' : 'relative w-full'
-              }`}>&nbsp;</span>
-              <span className={`block h-[2px] bg-gold rounded transition-all duration-300 w-[70%] ${
-                mobileOpen ? 'opacity-0' : 'opacity-100'
-              }`}>&nbsp;</span>
-              <span className={`block h-[2px] bg-gold rounded transition-all duration-300 ${
-                mobileOpen ? 'absolute top-1/2 -rotate-45 w-full' : 'relative w-full'
-              }`}>&nbsp;</span>
-            </div>
-          </button>
+          <div className="flex items-center gap-4 md:hidden">
+            <button 
+              onClick={() => setCartOpen(true)}
+              className="relative p-2 text-gray-300 hover:text-gold transition-colors bg-transparent border-none cursor-pointer"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute top-0 right-0 bg-danger text-white text-[0.6rem] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
+            {/* Mobile Hamburger */}
+            <button
+              className="bg-none border-none cursor-pointer p-2 z-[1100] nav-mobile-btn flex items-center"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="w-6 h-6 text-gold" /> : <Menu className="w-6 h-6 text-gold" />}
+            </button>
+          </div>
         </div>
       </nav>
 

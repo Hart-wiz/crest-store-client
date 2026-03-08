@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Crown, Instagram, Twitter, Youtube, Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -31,25 +32,26 @@ export default function Footer() {
       <div className="max-w-[1280px] mx-auto pt-14 px-6 pb-8 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-12">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-              <path d="M20 4L4 14V26L20 36L36 26V14L20 4Z" stroke="#D4AF37" strokeWidth="2.5" fill="none"/>
-              <path d="M20 8L10 14V26L20 32L30 26V14L20 8Z" stroke="#D4AF37" strokeWidth="1.5" fill="none"/>
-            </svg>
-            <span className="font-heading text-xl font-bold tracking-[0.15em]">CREST</span>
+          <div className="flex items-center gap-2 mb-4 text-gold">
+            <Crown className="w-7 h-7" />
+            <span className="font-heading text-xl font-bold tracking-[0.15em] text-white">CREST</span>
           </div>
           <p className="text-gray-500 text-[0.85rem] leading-[1.7] max-w-[280px]">
             Premium streetwear for those who dare to stand out. Crafted with uncompromising quality and bold vision.
           </p>
           {/* Social Icons */}
           <div className="flex gap-4 mt-5">
-            {['Instagram', 'Twitter', 'TikTok'].map(social => (
+            {[
+              { icon: Instagram, href: '#' },
+              { icon: Twitter, href: '#' },
+              { icon: Youtube, href: '#' }
+            ].map((social, i) => (
               <a
-                key={social}
-                href="#"
-                className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 text-[0.7rem] font-semibold no-underline transition-all duration-300 tracking-[-0.02em] hover:border-gold hover:text-gold"
+                key={i}
+                href={social.href}
+                className="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-gold hover:text-gold transition-all duration-300"
               >
-                {social[0] + social[1]}
+                <social.icon className="w-4 h-4" />
               </a>
             ))}
           </div>
@@ -91,18 +93,22 @@ export default function Footer() {
         {/* Contact */}
         <div>
           <h4 className="text-xs uppercase tracking-[0.12em] text-gold mb-5 font-bold">Contact</h4>
-          <p className="text-gray-400 text-[0.85rem] mb-3">
-            📧 hello@crest.store
-          </p>
-          <p className="text-gray-400 text-[0.85rem] mb-3">
-            📱 +234 801 234 5678
-          </p>
-          <p className="text-gray-400 text-[0.85rem] mb-3">
-            💬 WhatsApp Support
-          </p>
-          <p className="text-gray-400 text-[0.85rem]">
-            📍 Lagos, Nigeria
-          </p>
+          <div className="flex items-center gap-3 text-gray-400 text-[0.85rem] mb-3">
+            <Mail className="w-4 h-4 text-gray-400 " />
+            <span>hello@crest.store</span>
+          </div>
+          <div className="flex items-center gap-3 text-gray-400 text-[0.85rem] mb-3">
+            <Phone className="w-4 h-4 text-gray-400 " />
+            <span>+234 801 234 5678</span>
+          </div>
+          <div className="flex items-center gap-3 text-gray-400 text-[0.85rem] mb-3">
+            <MessageCircle className="w-4 h-4 text-gray-400 " />
+            <span>WhatsApp Support</span>
+          </div>
+          <div className="flex items-center gap-3 text-gray-400 text-[0.85rem]">
+            <MapPin className="w-4 h-4 text-gray-400 " />
+            <span>Lagos, Nigeria</span>
+          </div>
         </div>
       </div>
 

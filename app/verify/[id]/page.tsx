@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { Crown, Check } from 'lucide-react';
 import { products } from '../../data/store';
+import { useCart } from '../../context/CartContext';
 
 const verificationMessages = [
   'Checking inventory availability…',
@@ -15,7 +17,10 @@ const verificationMessages = [
 export default function VerifyPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const product = products.find(p => p.id === params.id);
+  const { addToCart, setCartOpen } = useCart();
+  
   const [currentStep, setCurrentStep] = useState(0);
   const [verified, setVerified] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -57,8 +62,8 @@ export default function VerifyPage() {
 
   if (!product) {
     return (
-      <div className="pt-[140px] text-center min-h-[80vh]">
-        <p className="text-5xl mb-4">♛</p>
+      <div className="pt-[140px] text-center min-h-[80vh] flex flex-col items-center">
+        <Crown className="w-16 h-16 text-gray-700 mb-4" />
         <h1 className="font-heading text-2xl">Product Not Found</h1>
       </div>
     );
@@ -72,8 +77,8 @@ export default function VerifyPage() {
             {/* Spinner */}
             <div className="relative w-[100px] h-[100px] mx-auto mb-10">
               <div className="w-[100px] h-[100px] rounded-full border-[3px] border-[rgba(212,175,55,0.1)] border-t-gold animate-spin" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl">♛</span>
+              <div className="absolute inset-0 flex items-center justify-center text-gold animate-pulse">
+                <Crown className="w-8 h-8" />
               </div>
             </div>
 
@@ -95,12 +100,12 @@ export default function VerifyPage() {
                 >
                   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[0.6rem] shrink-0 ${
                     i < currentStep
-                      ? 'bg-gold text-black border-none'
+                      ? 'bg-[#38A169] text-white border-none font-bold'
                       : i === currentStep
-                        ? 'bg-transparent border-2 border-gold text-gray-500 animate-pulse-gold'
-                        : 'bg-transparent border border-gray-700 text-gray-500'
+                        ? 'bg-transparent border-2 border-gold text-gold animate-pulse-gold font-bold'
+                        : 'bg-transparent border border-gray-700 text-gray-500 font-bold'
                   }`}>
-                    {i < currentStep ? '✓' : ''}
+                    {i < currentStep ? <Check className="w-3.5 h-3.5" /> : i + 1}
                   </span>
                   <span className={`text-[0.85rem] text-left ${
                     i <= currentStep ? 'text-gray-300' : 'text-gray-600'
@@ -123,8 +128,8 @@ export default function VerifyPage() {
         ) : (
           <div className="animate-scale-in">
             {/* Success */}
-            <div className="w-20 h-20 rounded-full mx-auto mb-8 bg-gradient-to-br from-gold-dark to-gold flex items-center justify-center animate-pulse-gold">
-              <span className="text-[2rem] text-black">✓</span>
+            <div className="w-20 h-20 rounded-full mx-auto mb-8 bg-gradient-to-br from-[#38A169] to-[#68D391] flex items-center justify-center shadow-[0_0_20px_rgba(104,211,145,0.25)]">
+              <Check className="w-10 h-10 text-white stroke-[3px]" />
             </div>
             <h2 className="font-heading text-[1.75rem] font-bold mb-4">
               Verification <span className="gold-text">Complete</span>
@@ -144,10 +149,12 @@ export default function VerifyPage() {
             </div>
 
             <button
-              onClick={() => router.push('/checkout')}
+              onClick={() => {
+                router.push(`/product/${product!.id}?verified=true`);
+              }}
               className="btn-gold w-full p-[18px] text-[0.95rem]"
             >
-              Continue to Checkout
+              Continue to Product
             </button>
             <p className="text-gray-500 text-xs mt-4">
               Your reservation expires in 15 minutes

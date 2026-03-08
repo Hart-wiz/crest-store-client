@@ -1,22 +1,34 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Shirt, Minus, Plus, ArrowRight, CheckCircle2, Truck, MessageSquare, ShieldCheck } from 'lucide-react';
 import { products, formatPrice } from '../../data/store';
+import { useCart } from '../../context/CartContext';
 
 export default function ProductPage() {
   const params = useParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const product = products.find(p => p.id === params.id);
+  const { addToCart, setCartOpen } = useCart();
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [adding, setAdding] = useState(false);
+
+  useEffect(() => {
+    if (product?.isExclusive && searchParams.get('verified') !== 'true') {
+      router.replace(`/verify/${product.id}`);
+    }
+  }, [product, searchParams, router]);
 
   if (!product) {
     return (
-      <div className="pt-[140px] text-center min-h-[60vh]">
-        <p className="text-5xl mb-4">♛</p>
+      <div className="pt-[140px] text-center min-h-[60vh] flex flex-col items-center">
+        <Shirt className="w-16 h-16 text-gray-700 mb-4" />
         <h1 className="font-heading text-2xl mb-3">Product Not Found</h1>
         <Link href="/shop" className="btn-outline no-underline">Back to Shop</Link>
       </div>
@@ -24,7 +36,26 @@ export default function ProductPage() {
   }
 
   const related = products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4);
-  const buyLink = product.isExclusive ? `/verify/${product.id}` : '/checkout';
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+    setAdding(true);
+    addToCart({
+      product,
+      size: selectedSize,
+      colorIndex: selectedColor,
+      quantity,
+      price: product.price
+    });
+    
+    setTimeout(() => {
+      setAdding(false);
+      setCartOpen(true);
+    }, 500);
+  };
 
   return (
     <div className="pt-[100px]">
@@ -125,23 +156,28 @@ export default function ProductPage() {
               Quantity
             </label>
             <div className="flex items-center gap-0">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-11 h-11 border border-gray-700 bg-transparent text-white text-xl cursor-pointer hover:bg-gray-800 transition-colors">
-                −
+              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-11 h-11 border border-gray-700 bg-transparent text-white cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center">
+                <Minus className="w-4 h-4" />
               </button>
               <span className="w-14 h-11 flex items-center justify-center border-y border-gray-700 text-[0.9rem] font-semibold">
                 {quantity}
               </span>
-              <button onClick={() => setQuantity(Math.min(product.stock, quantity + 1))} className="w-11 h-11 border border-gray-700 bg-transparent text-white text-xl cursor-pointer hover:bg-gray-800 transition-colors">
-                +
+              <button onClick={() => setQuantity(Math.min(product.stock, quantity + 1))} className="w-11 h-11 border border-gray-700 bg-transparent text-white cursor-pointer hover:bg-gray-800 transition-colors flex items-center justify-center">
+                <Plus className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           {/* Buttons */}
           <div className="flex gap-3 flex-wrap">
-            <Link href={buyLink} className="btn-gold no-underline flex-1 text-center py-4 px-8 text-[0.9rem] min-w-[200px]">
-              {product.isExclusive ? 'Buy Exclusive Item' : 'Buy Now'}
-            </Link>
+            <button 
+              onClick={handleAddToCart}
+              disabled={adding}
+              className="btn-gold flex-1 text-center py-4 px-8 text-[0.9rem] min-w-[200px] border-none flex items-center justify-center gap-2"
+            >
+              {adding ? 'Adding...' : 'Add to Cart'}
+              {!adding && <ArrowRight className="w-5 h-5" />}
+            </button>
           </div>
 
           {/* Stock info */}
@@ -155,12 +191,13 @@ export default function ProductPage() {
           {/* Details */}
           <div className="mt-10 border-t border-white/5 pt-6">
             {[
-              { label: '✅ Premium Quality Materials' },
-              { label: '🚚 Fast Delivery (2-5 Days)' },
-              { label: '💬 WhatsApp Support' },
-              { label: '🔒 Secure Checkout' },
+              { label: 'Premium Quality Materials', icon: CheckCircle2, color: 'text-[#68D391]' },
+              { label: 'Fast Delivery (2-5 Days)', icon: Truck, color: 'text-[#63B3ED]' },
+              { label: 'WhatsApp Support', icon: MessageSquare, color: 'text-[#4FD1C5]' },
+              { label: 'Secure Checkout', icon: ShieldCheck, color: 'text-gold' },
             ].map((item, i) => (
-              <p key={i} className="text-gray-400 text-[0.85rem] mb-2.5">
+              <p key={i} className="text-gray-400 text-[0.85rem] mb-2.5 flex items-center gap-2.5">
+                <item.icon className={`w-4 h-4 ${item.color}`} />
                 {item.label}
               </p>
             ))}
