@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Crown, Instagram, Twitter, Youtube, Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Instagram, Twitter, Youtube, Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -32,10 +33,12 @@ export default function Footer() {
       <div className="max-w-[1280px] mx-auto pt-14 px-6 pb-8 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-12">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-2 mb-4 text-gold">
-            <Crown className="w-7 h-7" />
-            <span className="font-heading text-xl font-bold tracking-[0.15em] text-white">CREST</span>
-          </div>
+          <Link href="/" className="no-underline flex items-center gap-2 text-gold">
+            <Image src="/logo.png" alt="Crest Logo" width={33} height={30} className=" object-contain" priority />
+            <span className="font-heading text-2xl font-bold tracking-[0.15em] text-white">
+              CREST
+            </span>
+          </Link>
           <p className="text-gray-500 text-[0.85rem] leading-[1.7] max-w-[280px]">
             Premium streetwear for those who dare to stand out. Crafted with uncompromising quality and bold vision.
           </p>

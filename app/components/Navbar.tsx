@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Crown, Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
@@ -25,16 +26,15 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out ${
-          scrolled
-            ? 'py-3 bg-black/95 backdrop-blur-md border-b border-white/5'
-            : 'py-5 bg-transparent border-b border-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out ${scrolled
+          ? 'py-3 bg-black/95 backdrop-blur-md border-b border-white/5'
+          : 'py-5 bg-transparent border-b border-transparent'
+          }`}
       >
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="no-underline flex items-center gap-2 text-gold">
-            <Crown className="w-8 h-8" />
+            <Image src="/logo.png" alt="Crest Logo" width={33} height={30} className=" object-contain" priority />
             <span className="font-heading text-2xl font-bold tracking-[0.15em] text-white">
               CREST
             </span>
@@ -55,7 +55,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <button 
+            <button
               onClick={() => setCartOpen(true)}
               className="relative p-2 text-gray-300 hover:text-gold transition-colors bg-transparent border-none cursor-pointer hidden md:block"
             >
@@ -72,7 +72,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4 md:hidden">
-            <button 
+            <button
               onClick={() => setCartOpen(true)}
               className="relative p-2 text-gray-300 hover:text-gold transition-colors bg-transparent border-none cursor-pointer"
             >

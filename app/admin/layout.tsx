@@ -3,18 +3,18 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  LayoutDashboard, 
-  Tag, 
-  Package, 
-  Users, 
-  BarChart3, 
-  Settings, 
-  Crown, 
-  ArrowLeft,
+import {
+  LayoutDashboard,
+  Tag,
+  Package,
+  Users,
+  BarChart3,
+  Settings,
   Menu,
-  X 
+  X,
+  ArrowLeft
 } from 'lucide-react';
+import Image from 'next/image';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, color: 'text-white' },
@@ -38,7 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="py-6 px-5 border-b border-white/5">
           <Link href="/admin" className="no-underline flex items-center gap-2.5">
-            <Crown className="w-7 h-7 text-gold" />
+            <Image src="/logo.png" alt="Crest Logo" width={33} height={33} className="w-7 h-7 object-contain" />
             <div>
               <span className="font-heading text-[1.1rem] font-bold tracking-[0.15em] text-white">
                 CREST
@@ -50,6 +50,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
         </div>
 
+
         {/* Nav */}
         <nav className="flex-1 py-4 px-3">
           {navItems.map(item => {
@@ -59,11 +60,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 key={item.href}
                 href={item.href}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 py-3 px-4 mb-1 rounded-lg no-underline text-sm transition-all duration-200 border-l-[3px] ${
-                  isActive
-                    ? 'text-gold bg-[rgba(212,175,55,0.08)] font-semibold border-gold'
-                    : 'text-gray-400 bg-transparent font-normal border-transparent hover:bg-white/5 hover:text-white'
-                }`}
+                className={`flex items-center gap-3 py-3 px-4 mb-1 rounded-lg no-underline text-sm transition-all duration-200 border-l-[3px] ${isActive
+                  ? 'text-gold bg-[rgba(212,175,55,0.08)] font-semibold border-gold'
+                  : 'text-gray-400 bg-transparent font-normal border-transparent hover:bg-white/5 hover:text-white'
+                  }`}
               >
                 <item.icon className={`w-4 h-4 ${isActive ? item.color : 'text-inherit'}`} />
                 {item.label}
