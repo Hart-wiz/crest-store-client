@@ -101,6 +101,15 @@ export default function Navbar() {
         <div
           className="fixed inset-0 z-[1050] bg-black/98 backdrop-blur-[20px] flex flex-col items-center justify-center gap-9 animate-fade-in"
         >
+          {/* Close button */}
+          <button 
+            onClick={() => setMobileOpen(false)}
+            className="absolute top-8 right-8 text-gray-400 hover:text-gold flex items-center gap-2 text-[0.7rem] tracking-[0.2em] font-medium uppercase transition-colors duration-300 bg-transparent border-none cursor-pointer"
+            style={{ animation: 'fadeIn 0.6s ease-out forwards' }}
+          >
+            Close <X className="w-5 h-5" />
+          </button>
+
           {[
             { label: 'Home', href: '/' },
             { label: 'Shop', href: '/shop' },
