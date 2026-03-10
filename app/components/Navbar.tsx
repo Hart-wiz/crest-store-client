@@ -34,8 +34,8 @@ export default function Navbar() {
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="no-underline flex items-center gap-2 text-gold">
-            <Image src="/logo.png" alt="Crest Logo" width={33} height={30} className=" object-contain" priority />
-            <span className="font-heading text-2xl font-bold tracking-[0.15em] text-white">
+            <Image src="/logo.png" alt="Crest Logo" width={33} height={30} className="h-7 object-contain" priority />
+            <span className="font-heading text-sms font-bold tracking-[0.15em] text-white">
               CREST
             </span>
           </Link>
@@ -102,7 +102,7 @@ export default function Navbar() {
           className="fixed inset-0 z-[1050] bg-black/98 backdrop-blur-[20px] flex flex-col items-center justify-center gap-9 animate-fade-in"
         >
           {/* Close button */}
-          <button 
+          <button
             onClick={() => setMobileOpen(false)}
             className="absolute top-8 right-8 text-gray-400 hover:text-gold flex items-center gap-2 text-[0.7rem] tracking-[0.2em] font-medium uppercase transition-colors duration-300 bg-transparent border-none cursor-pointer"
             style={{ animation: 'fadeIn 0.6s ease-out forwards' }}
